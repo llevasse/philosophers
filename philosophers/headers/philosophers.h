@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/30 10:33:57 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/30 10:58:18 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+# include "mess.h"
+
+typedef struct s_philo {
+	int	id;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	eaten;
+}	t_philo;
+
+
+int					is_args_valid(int argc, char **argv);
 
 int					ft_isspace(char c);
 unsigned long long	ft_atoi_ullong(const char *str);

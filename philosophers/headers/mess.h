@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mess.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 09:58:11 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/30 10:56:56 by llevasse         ###   ########.fr       */
+/*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
+/*   Updated: 2023/08/30 10:58:28 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#ifndef MESS_H
+# define MESS_H
 
-int	main(int argc, char **argv)
-{
-	if (!is_args_valid(argc, argv))
-		return (1);
-	return (0);
-}
+# define TOO_SMALL "Not enough arguments.\n"
+# define TOO_SMALL_L 22
+# define TOO_MANY "Too many arguments.\n"
+# define TOO_MANY_L 20
+
+#endif

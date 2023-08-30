@@ -8,6 +8,7 @@ YELLOW			=	\033[0;33m
 NC				=	\033[0m
 
 SRC				=	srcs/main.c \
+					srcs/checkers.c \
 					srcs/ft_atoi_ullong.c
 
 OBJS_DIR		=	.OBJS/
