@@ -7,10 +7,11 @@ GREEN			=	\033[0;32m
 YELLOW			=	\033[0;33m
 NC				=	\033[0m
 
-SRC				=	srcs/main.c
+SRC				=	srcs/main.c \
+					srcs/ft_atoi_ullong.c
 
 OBJS_DIR		=	.OBJS/
-OBJS			=	$(addprefix $(OBJS_DIR), $(SRC: .c=.o))
+OBJS			=	$(addprefix $(OBJS_DIR), $(SRC:.c=.o))
 
 HEADER_DIR		=	headers/
 HEADER_FILE		=	headers/philosophers.h
@@ -22,9 +23,6 @@ $(NAME):			$(OBJS_DIR) Makefile $(HEADER_FILE) $(OBJS)
 $(OBJS_DIR)%.o:	%.c $(HEADER_FILE)
 					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) -c $< -o $@
 					@echo -n "\33[2K\r$(YELLOW)Compiled $<"
-
-$(OBJS_DIR)%.shell:	%.c $(HEADER_FILE)
-					$(CC) $(FLAGS) -g -I $(HEADER_DIR) -c $< -o $@
 
 $(OBJS_DIR):
 					@mkdir -p $(OBJS_DIR)
