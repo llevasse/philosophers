@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/30 10:58:18 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/30 22:02:10 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo {
 
 
 int					is_args_valid(int argc, char **argv);
+int					is_only_digit(char	*s);
 
 int					ft_isspace(char c);
 unsigned long long	ft_atoi_ullong(const char *str);

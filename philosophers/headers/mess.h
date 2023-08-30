@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/30 10:58:28 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/30 22:15:19 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,15 @@
 # define TOO_SMALL_L 22
 # define TOO_MANY "Too many arguments.\n"
 # define TOO_MANY_L 20
+# define BAD_NB_PHILO "Numbers of philosophers is not valid\n"
+# define BAD_NB_PHILO_L 37
+# define BAD_TIME_DIE "Time to die is not valid\n"
+# define BAD_TIME_DIE_L 25
+# define BAD_TIME_EAT "Time to eat is not valid\n"
+# define BAD_TIME_EAT_L 25
+# define BAD_TIME_SLEEP "Time to sleep is not valid\n"
+# define BAD_TIME_SLEEP_L 27
+# define BAD_NB_EAT "Numbers of time a philosophers must eat is not valid\n"
+# define BAD_NB_EAT_L 53
 
 #endif
