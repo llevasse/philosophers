@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 22:51:20 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/31 23:22:14 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_philo **init_philo(int max_id)
 		philo[i] = malloc(sizeof(struct s_philo));
 		if (!philo[i++])
 			break ;
+		philo[i - 1]->succes = 0;
 		philo[i] = NULL;
 	}
 	if (i-- < max_id)
@@ -52,6 +53,7 @@ t_philo **init_philo(int max_id)
 
 void	set_philo(char **argv, t_table *table, int buddy_id)
 {
+	int		succes;
 	int		right_id;
 	int		left_id;
 
@@ -68,4 +70,6 @@ void	set_philo(char **argv, t_table *table, int buddy_id)
 	table->philo[buddy_id]->eaten_times = 0;
 	table->philo[buddy_id]->left_buddy = table->philo[left_id];
 	table->philo[buddy_id]->right_buddy = table->philo[right_id];
+	succes = pthread_mutex_init(&table->philo[buddy_id]->fork, NULL);
+	table->philo[buddy_id]->succes = succes;
 }

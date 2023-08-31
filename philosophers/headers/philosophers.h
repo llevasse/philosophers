@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 22:32:36 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/31 23:21:48 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@
 # include "mess.h"
 
 typedef struct s_philo {
-	int	id;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	eaten_times;
-	struct s_philo *left_buddy;
-	struct s_philo *right_buddy;
+	int				id;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				eaten_times;
+	int				succes;
+	pthread_mutex_t	fork;
+	struct s_philo	*left_buddy;
+	struct s_philo	*right_buddy;
 }	t_philo;
 
 typedef struct s_table {

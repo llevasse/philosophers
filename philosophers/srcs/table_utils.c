@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 22:51:40 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/31 23:22:33 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ t_table	*init_table(char **argv)
 	if (!table->threads)
 		return (free_table(table), NULL);
 	while (i < id)
+	{
 		set_philo(argv, table, i++);
+		if (table->philo[i - 1]->succes != 0)
+			return (free_table(table), NULL);
+	}
 	print_philo(table, 0);
 	return (table);
 }
@@ -51,7 +55,11 @@ void	free_table(t_table *table)
 	{
 		i = 0;
 		while (table->philo[i])
+		{
+			if (table->philo[i]->succes == 0)
+				pthread_mutex_destroy(&table->philo[i]->fork);
 			free(table->philo[i++]);
+		}
 		free(table->philo);
 	}
 	if (table->threads)
