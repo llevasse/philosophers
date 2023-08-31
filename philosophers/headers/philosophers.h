@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 23:21:48 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:09:33 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_philo {
 }	t_philo;
 
 typedef struct s_table {
+	int			nb_philo;
+	int			nb_rounds;			//one round is ended when each philo eated at least once.
 	pthread_t	*threads;
 	t_philo		**philo;
 }	t_table;

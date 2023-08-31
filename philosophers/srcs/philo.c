@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 23:22:14 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:10:43 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	print_philo(t_table *table, int id)
 	printf("philo time to sleep : %d\n", table->philo[id]->time_to_sleep);
 	printf("philo left buddy id : %d\n", table->philo[id]->left_buddy->id);
 	printf("philo right buddy id : %d\n", table->philo[id]->right_buddy->id);
+}
+
+void	create_threads(t_table *table)
+{
+	int	i;
+
+	i = 0;
 }
 
 t_philo **init_philo(int max_id)
