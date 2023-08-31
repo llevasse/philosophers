@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 22:32:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/31 22:51:40 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,15 @@ void	set_table_null(t_table *table)
 
 void	free_table(t_table *table)
 {
+	int	i;
+
 	if (table->philo)
+	{
+		i = 0;
+		while (table->philo[i])
+			free(table->philo[i++]);
 		free(table->philo);
+	}
 	if (table->threads)
 		free(table->threads);
 	free(table);

@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 22:33:22 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/08/31 22:51:20 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,17 @@ t_philo **init_philo(int max_id)
 	{
 		philo[i] = malloc(sizeof(struct s_philo));
 		if (!philo[i++])
-			return (philo);
+			break ;
+		philo[i] = NULL;
 	}
-	i = 0;
+	if (i-- < max_id)
+	{
+		while (i >= 0)
+			free(philo[i--]);
+		free(philo);
+		philo = 0;
+		return (0);
+	}
 	return (philo);
 
 }
