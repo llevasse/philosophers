@@ -9,6 +9,7 @@ NC				=	\033[0m
 
 SRC				=	srcs/main.c \
 					srcs/checkers.c \
+					srcs/table_utils.c \
 					srcs/ft_atoi_ullong.c
 
 OBJS_DIR		=	.OBJS/
@@ -18,7 +19,7 @@ HEADER_DIR		=	headers/
 HEADER_FILE		=	headers/philosophers.h
 
 $(NAME):			$(OBJS_DIR) Makefile $(HEADER_FILE) $(OBJS)
-					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) $(OBJS) -o $@
+					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) $(OBJS) -lpthread -lrt -o $@
 					@echo "\33[2K\r$(GREEN)Philosophers compiled :D$(NC)"
 					
 $(OBJS_DIR)%.o:	%.c $(HEADER_FILE)
