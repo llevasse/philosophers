@@ -6,20 +6,21 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 00:22:03 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:31:59 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_philo(t_table *table, int id)
+void	print_philo(t_philo *philo)
 {
-	printf("philo id : %d\n", table->philo[id]->id);
-	printf("philo time to die : %d\n", table->philo[id]->time_to_die);
-	printf("philo time to eat : %d\n", table->philo[id]->time_to_eat);
-	printf("philo time to sleep : %d\n", table->philo[id]->time_to_sleep);
-	printf("philo left buddy id : %d\n", table->philo[id]->left_buddy->id);
-	printf("philo right buddy id : %d\n", table->philo[id]->right_buddy->id);
+	printf("philo id : %d\n", philo->id);
+	printf("philo time to die : %d\n", philo->time_to_die);
+	printf("philo time to eat : %d\n", philo->time_to_eat);
+	printf("philo time to sleep : %d\n", philo->time_to_sleep);
+	printf("philo left buddy id : %d\n", philo->left_buddy->id);
+	printf("philo right buddy id : %d\n", philo->right_buddy->id);
+	printf("\n");
 }
 
 void	create_threads(t_table *table)
@@ -29,7 +30,7 @@ void	create_threads(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		if (pthread_create(table->threads[i], NULL, &routine, NULL))
+		if (pthread_create(&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return ;
 		i++;
 	}
@@ -83,6 +84,7 @@ void	set_philo(char **argv, t_table *table, int buddy_id)
 		left_id = ft_atoi(argv[1]) - 1;
 	if (buddy_id == ft_atoi(argv[1]) - 1)
 		right_id = 0;
+	table->philo[buddy_id]->is_alive = 1;
 	table->philo[buddy_id]->id = buddy_id;
 	table->philo[buddy_id]->time_to_die = ft_atoi(argv[2]);
 	table->philo[buddy_id]->time_to_eat = ft_atoi(argv[3]);

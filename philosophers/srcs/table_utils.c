@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 00:12:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:31:15 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_table	*init_table(char **argv)
 {
 	t_table *table;
 	int	i;
-	int	id;
 
 	i = 0;
 	table = malloc(sizeof(struct s_table));
@@ -37,7 +36,6 @@ t_table	*init_table(char **argv)
 		if (table->philo[i - 1]->succes != 0)
 			return (free_table(table), NULL);
 	}
-	print_philo(table, 0);
 	return (table);
 }
 

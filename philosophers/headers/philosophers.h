@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 00:09:33 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:32:35 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "mess.h"
 
 typedef struct s_philo {
+	int				is_alive;
 	int				id;
 	int				time_to_die;
 	int				time_to_eat;
@@ -51,7 +52,9 @@ t_table				*init_table(char **argv);
 void				set_table_null(t_table *table);
 t_philo				 **init_philo(int max_id);
 void				set_philo(char **argv, t_table *table, int buddy_id);
-void				print_philo(t_table *table, int id);
+void				print_philo(t_philo *philo);
+
+void				*alive_routine(void	*args);
 
 int					ft_isspace(char c);
 int					ft_atoi(const char *str);

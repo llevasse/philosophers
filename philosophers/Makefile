@@ -11,6 +11,7 @@ SRC				=	srcs/main.c \
 					srcs/checkers.c \
 					srcs/table_utils.c \
 					srcs/philo.c \
+					srcs/routine.c \
 					srcs/ft_atoi.c
 
 OBJS_DIR		=	.OBJS/
