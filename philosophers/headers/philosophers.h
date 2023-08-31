@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 00:32:35 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:34:42 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_table {
 int					is_args_valid(int argc, char **argv);
 int					is_only_digit(char	*s);
 
+void				create_threads(t_table *table);
 void				free_table(t_table *table);
 t_table				*init_table(char **argv);
 void				set_table_null(t_table *table);
