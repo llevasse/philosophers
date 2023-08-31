@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/31 23:22:33 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:12:26 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ t_table	*init_table(char **argv)
 	if (!table)
 		return (NULL);
 	set_table_null(table);
-	id = ft_atoi(argv[1]);
-	table->philo = init_philo(id);
+	table->nb_philo = ft_atoi(argv[1]);
+	table->philo = init_philo(table->nb_philo);
 	if (!table->philo)
 		return (free_table(table), NULL);
-	table->philo[id] = 0;
-	table->threads = malloc(sizeof(pthread_t) * (id + 1));
+	table->philo[table->nb_philo] = 0;
+	table->threads = malloc(sizeof(pthread_t) * (table->nb_philo + 1));
 	if (!table->threads)
 		return (free_table(table), NULL);
-	while (i < id)
+	while (i < table->nb_philo)
 	{
 		set_philo(argv, table, i++);
 		if (table->philo[i - 1]->succes != 0)
