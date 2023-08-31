@@ -10,7 +10,8 @@ NC				=	\033[0m
 SRC				=	srcs/main.c \
 					srcs/checkers.c \
 					srcs/table_utils.c \
-					srcs/ft_atoi_ullong.c
+					srcs/philo.c \
+					srcs/ft_atoi.c
 
 OBJS_DIR		=	.OBJS/
 OBJS			=	$(addprefix $(OBJS_DIR), $(SRC:.c=.o))
