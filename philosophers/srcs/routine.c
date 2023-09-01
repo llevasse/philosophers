@@ -6,20 +6,33 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 23:22:01 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 23:51:35 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	can_eat(t_philo *buddy)
+void	ft_eat(t_philo *buddy)
 {
 	pthread_mutex_lock(&buddy->left_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	print_take_fork(buddy);
 	pthread_mutex_lock(&buddy->right_buddy->fork);
 	print_take_fork(buddy);
-	return (1);
+	gettimeofday(&buddy->current_time, NULL);
+	print_eat(buddy);
+	usleep(buddy->time_to_eat);
+	buddy->eaten_times++;
+	gettimeofday(&buddy->time_since_eating, NULL);
+	pthread_mutex_unlock(&buddy->right_buddy->fork);
+	pthread_mutex_unlock(&buddy->right_buddy->fork);
+}
+
+void	ft_sleep(t_philo *buddy)
+{
+	gettimeofday(&buddy->current_time, NULL);
+	print_sleep(buddy);
+	usleep(buddy->time_to_sleep);
 }
 
 void	*alive_routine(void	*args)
@@ -27,15 +40,10 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-	if (can_eat(buddy))
+	while (buddy->is_alive)
 	{
-		gettimeofday(&buddy->current_time, NULL);
-		print_eat(buddy);
-		usleep(buddy->time_to_eat);
-		buddy->eaten_times++;
-		gettimeofday(&buddy->time_since_eating, NULL);
-		pthread_mutex_unlock(&buddy->right_buddy->fork);
-		pthread_mutex_unlock(&buddy->right_buddy->fork);
+		ft_eat(buddy);
+		ft_sleep(buddy);
 	}
 	pthread_exit(NULL);
 	return (NULL);
