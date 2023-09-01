@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 22:43:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 23:22:01 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	*alive_routine(void	*args)
 	buddy = (t_philo *)args;
 	if (can_eat(buddy))
 	{
+		gettimeofday(&buddy->current_time, NULL);
+		print_eat(buddy);
 		usleep(buddy->time_to_eat);
+		buddy->eaten_times++;
 		gettimeofday(&buddy->time_since_eating, NULL);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
