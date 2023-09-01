@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 00:34:42 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 12:40:57 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,26 @@
 # include "mess.h"
 
 typedef struct s_philo {
+	struct timeval	current_time;
 	int				is_alive;
 	int				id;
 	int				time_to_die;
 	int				time_to_eat;
+	struct timeval	time_since_eating;
 	int				time_to_sleep;
+	struct timeval	time_since_sleeping;
 	int				eaten_times;
 	int				succes;
 	pthread_mutex_t	fork;
 	struct s_philo	*left_buddy;
 	struct s_philo	*right_buddy;
+	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table {
-	int			nb_philo;
-	int			nb_rounds;			//one round is ended when each philo eated at least once.
+	struct timeval	init_time;
+	int				nb_philo;
+	int				nb_rounds;	//one round is ended when each philo eated at least once.
 	pthread_t	*threads;
 	t_philo		**philo;
 }	t_table;
@@ -59,5 +64,10 @@ void				*alive_routine(void	*args);
 
 int					ft_isspace(char c);
 int					ft_atoi(const char *str);
+
+size_t				ft_strlen(const char *s);
+void				ft_putchar_fd(char c, int fd);
+void				ft_putstr_fd(char *s, int fd);
+void				ft_putnbr_fd(int n, int fd);
 
 #endif

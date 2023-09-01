@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 00:31:59 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 12:24:34 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,7 @@ void	set_philo(char **argv, t_table *table, int buddy_id)
 	table->philo[buddy_id]->right_buddy = table->philo[right_id];
 	succes = pthread_mutex_init(&table->philo[buddy_id]->fork, NULL);
 	table->philo[buddy_id]->succes = succes;
+	table->philo[buddy_id]->table = table;
+	gettimeofday(&table->philo[buddy_id]->time_since_eating, NULL);
+	gettimeofday(&table->philo[buddy_id]->time_since_sleeping, NULL);
 }
