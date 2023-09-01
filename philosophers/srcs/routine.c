@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 23:51:35 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/02 00:09:29 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_eat(t_philo *buddy)
 	usleep(buddy->time_to_eat);
 	buddy->eaten_times++;
 	gettimeofday(&buddy->time_since_eating, NULL);
-	pthread_mutex_unlock(&buddy->right_buddy->fork);
+	pthread_mutex_unlock(&buddy->left_buddy->fork);
 	pthread_mutex_unlock(&buddy->right_buddy->fork);
 }
 
