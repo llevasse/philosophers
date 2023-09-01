@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/02 00:19:45 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/02 00:25:19 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ void	*alive_routine(void	*args)
 	{
 		ft_eat(buddy);
 		ft_sleep(buddy);
+		gettimeofday(&buddy->current_time, NULL);
+		if (buddy->current_time.tv_usec - buddy->time_since_eating.tv_usec < \
+			buddy->time_to_die)
+		{
+			print_died(buddy);
+			break ;
+		}
 	}
 	pthread_exit(NULL);
 	return (NULL);
