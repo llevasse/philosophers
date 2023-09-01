@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 12:40:57 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 22:47:07 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,8 @@
 # include <sys/stat.h>
 # include <pthread.h>
 
+# include "struct.h"
 # include "mess.h"
-
-typedef struct s_philo {
-	struct timeval	current_time;
-	int				is_alive;
-	int				id;
-	int				time_to_die;
-	int				time_to_eat;
-	struct timeval	time_since_eating;
-	int				time_to_sleep;
-	struct timeval	time_since_sleeping;
-	int				eaten_times;
-	int				succes;
-	pthread_mutex_t	fork;
-	struct s_philo	*left_buddy;
-	struct s_philo	*right_buddy;
-	struct s_table	*table;
-}	t_philo;
-
-typedef struct s_table {
-	struct timeval	init_time;
-	int				nb_philo;
-	int				nb_rounds;	//one round is ended when each philo eated at least once.
-	pthread_t	*threads;
-	t_philo		**philo;
-}	t_table;
 
 int					is_args_valid(int argc, char **argv);
 int					is_only_digit(char	*s);

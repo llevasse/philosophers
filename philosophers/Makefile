@@ -13,6 +13,7 @@ SRC				=	srcs/main.c \
 					srcs/philo.c \
 					srcs/routine.c \
 					srcs/ft_strlen.c \
+					srcs/messages.c \
 					srcs/ft_putstr_fd.c \
 					srcs/ft_putchar_fd.c \
 					srcs/ft_putnbr_fd.c \

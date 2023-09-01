@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/08/30 22:15:19 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 22:44:43 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,11 @@
 # define BAD_TIME_SLEEP_L 27
 # define BAD_NB_EAT "Numbers of time a philosophers must eat is not valid\n"
 # define BAD_NB_EAT_L 53
+
+void				print_take_fork(t_philo *buddy);
+void				print_eat(t_philo *buddy);
+void				print_sleep(t_philo *buddy);
+void				print_think(t_philo *buddy);
+void				print_died(t_philo *buddy);
 
 #endif

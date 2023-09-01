@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 12:43:47 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/01 22:43:12 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,9 @@ int	can_eat(t_philo *buddy)
 {
 	pthread_mutex_lock(&buddy->left_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
-	ft_putnbr_fd(buddy->current_time.tv_usec - buddy->table->init_time.tv_usec, 1);
-	ft_putstr_fd(" ", 1);
-	ft_putnbr_fd(buddy->id, 1);
-	ft_putstr_fd(" has taken a fork\n", 1);
+	print_take_fork(buddy);
 	pthread_mutex_lock(&buddy->right_buddy->fork);
-	ft_putnbr_fd(buddy->current_time.tv_usec - buddy->table->init_time.tv_usec, 1);
-	ft_putstr_fd(" ", 1);
-	ft_putnbr_fd(buddy->id, 1);
-	ft_putstr_fd(" has taken a fork\n", 1);
+	print_take_fork(buddy);
 	return (1);
 }
 
