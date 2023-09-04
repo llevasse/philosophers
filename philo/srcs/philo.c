@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 18:17:56 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:48:31 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	create_threads(t_table *table)
 			return ;
 		i++;
 	}
-	if (pthread_create(&table->death, NULL, &death_routine, table))
-		return ;
+//	if (pthread_create(&table->death, NULL, &death_routine, table))
+//		return ;
 	i = 0;
 	while (i < table->nb_philo)
 	{
