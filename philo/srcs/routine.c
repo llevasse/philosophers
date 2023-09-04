@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 00:21:30 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:46:58 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	ft_eat(t_philo *buddy)
 {
 	long	time;
 
-	pthread_mutex_lock(&buddy->fork);
-	pthread_mutex_lock(&buddy->left_buddy->fork);
+	pthread_mutex_lock(&buddy->right_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	print_take_fork(buddy);
+	pthread_mutex_lock(&buddy->left_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	print_take_fork(buddy);
 	gettimeofday(&buddy->current_time, NULL);
@@ -48,7 +48,11 @@ int	ft_eat(t_philo *buddy)
 	while (buddy->current_time.tv_usec < time)
 		gettimeofday(&buddy->current_time, NULL);
 	pthread_mutex_unlock(&buddy->left_buddy->fork);
-	pthread_mutex_unlock(&buddy->fork);
+	gettimeofday(&buddy->current_time, NULL);
+	print_release_fork(buddy);
+	pthread_mutex_unlock(&buddy->right_buddy->fork);
+	gettimeofday(&buddy->current_time, NULL);
+	print_release_fork(buddy);
 	buddy->eaten_times++;
 	return (check_death(buddy));
 }
@@ -69,12 +73,12 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-	while (ft_eat(buddy) != 0 && ft_sleep(buddy) != 0)
+	while (42)
 	{
-//		if (!ft_eat(buddy))
-///			break ;
-//		if (!ft_sleep(buddy))
-//			break ;
+		if (!ft_eat(buddy))
+			break ;
+		if (!ft_sleep(buddy))
+			break ;
 		gettimeofday(&buddy->current_time, NULL);
 		print_think(buddy);
 	}
