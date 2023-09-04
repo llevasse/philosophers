@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 18:47:21 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:53:51 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	ft_eat(t_philo *buddy)
 	gettimeofday(&buddy->time_since_eating, NULL);
 	print_eat(buddy);
 	while (buddy->current_time.tv_usec < time)
-	{
 		gettimeofday(&buddy->current_time, NULL);
-		usleep(1);
-	}
+	print_eat(buddy);
 	buddy->eaten_times++;
 	pthread_mutex_unlock(&buddy->fork);
 	pthread_mutex_unlock(&buddy->right_buddy->fork);
