@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 22:33:47 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:07:44 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static void	check_death(t_philo *buddy)
 	if (time > buddy->time_to_die)
 	{
 		print_died(buddy);
+		pthread_mutex_lock(&buddy->table->write);
 		buddy->is_alive = 0;
+		buddy->table->died = 1;
+		pthread_mutex_unlock(&buddy->table->write);
 	}	
 }
 
@@ -49,10 +52,10 @@ void	ft_eat(t_philo *buddy)
 	print_eat(buddy);
 	while (buddy->current_time.tv_usec < time)
 		gettimeofday(&buddy->current_time, NULL);
+	pthread_mutex_unlock(&buddy->right_buddy->fork);
+	pthread_mutex_unlock(&buddy->fork);
 	buddy->eaten_times++;
 	check_death(buddy);
-	pthread_mutex_unlock(&buddy->fork);
-	pthread_mutex_unlock(&buddy->right_buddy->fork);
 }
 
 void	ft_sleep(t_philo *buddy)
@@ -71,13 +74,13 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-	while (buddy->is_alive == 1)
+	while (buddy->is_alive == 1 && buddy->table->died == 0)
 	{
 		ft_eat(buddy);
-		if (buddy->is_alive == 0)
+		if (buddy->is_alive == 0 || buddy->table->died == 1)
 			break ;
 		ft_sleep(buddy);
-		if (buddy->is_alive == 0)
+		if (buddy->is_alive == 0 || buddy->table->died == 1)
 			break ;
 		gettimeofday(&buddy->current_time, NULL);
 		print_think(buddy);
