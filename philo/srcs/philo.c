@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 16:21:03 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:17:56 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	create_threads(t_table *table)
 	int	i;
 
 	i = 0;
-	while (i < table->nb_philo)
+		while (i < table->nb_philo)
 	{
 		if (pthread_create(&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return ;
 		i++;
 	}
+	if (pthread_create(&table->death, NULL, &death_routine, table))
+		return ;
 	i = 0;
 	while (i < table->nb_philo)
 	{
@@ -41,10 +43,6 @@ void	create_threads(t_table *table)
 			return ;
 		i++;
 	}
-	if (pthread_create(&table->death, NULL, &death_routine, table))
-		return ;
-	if (pthread_join(table->death, NULL))
-		return ;
 }
 
 t_philo **init_philo(int max_id)
