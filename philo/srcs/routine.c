@@ -6,13 +6,13 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 00:07:44 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:21:30 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	check_death(t_philo *buddy)
+static int	check_death(t_philo *buddy)
 {
 	long	time;
 
@@ -27,21 +27,16 @@ static void	check_death(t_philo *buddy)
 //	ft_putstr_fd("\033[0m", 1);
 //	pthread_mutex_unlock(&buddy->table->write);
 	if (time > buddy->time_to_die)
-	{
-		print_died(buddy);
-		pthread_mutex_lock(&buddy->table->write);
-		buddy->is_alive = 0;
-		buddy->table->died = 1;
-		pthread_mutex_unlock(&buddy->table->write);
-	}	
+		return (print_died(buddy), 0);
+	return (1);
 }
 
-void	ft_eat(t_philo *buddy)
+int	ft_eat(t_philo *buddy)
 {
 	long	time;
 
 	pthread_mutex_lock(&buddy->fork);
-	pthread_mutex_lock(&buddy->right_buddy->fork);
+	pthread_mutex_lock(&buddy->left_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	print_take_fork(buddy);
 	gettimeofday(&buddy->current_time, NULL);
@@ -52,13 +47,13 @@ void	ft_eat(t_philo *buddy)
 	print_eat(buddy);
 	while (buddy->current_time.tv_usec < time)
 		gettimeofday(&buddy->current_time, NULL);
-	pthread_mutex_unlock(&buddy->right_buddy->fork);
+	pthread_mutex_unlock(&buddy->left_buddy->fork);
 	pthread_mutex_unlock(&buddy->fork);
 	buddy->eaten_times++;
-	check_death(buddy);
+	return (check_death(buddy));
 }
 
-void	ft_sleep(t_philo *buddy)
+int	ft_sleep(t_philo *buddy)
 {
 	long	time;
 
@@ -66,7 +61,7 @@ void	ft_sleep(t_philo *buddy)
 	print_sleep(buddy);
 	while (buddy->current_time.tv_usec < time)
 		gettimeofday(&buddy->current_time, NULL);
-	check_death(buddy);
+	return (check_death(buddy));
 }
 
 void	*alive_routine(void	*args)
@@ -74,14 +69,12 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-	while (buddy->is_alive == 1 && buddy->table->died == 0)
+	while (ft_eat(buddy) != 0 && ft_sleep(buddy) != 0)
 	{
-		ft_eat(buddy);
-		if (buddy->is_alive == 0 || buddy->table->died == 1)
-			break ;
-		ft_sleep(buddy);
-		if (buddy->is_alive == 0 || buddy->table->died == 1)
-			break ;
+//		if (!ft_eat(buddy))
+///			break ;
+//		if (!ft_sleep(buddy))
+//			break ;
 		gettimeofday(&buddy->current_time, NULL);
 		print_think(buddy);
 	}
