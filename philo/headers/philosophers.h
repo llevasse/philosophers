@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/01 22:47:07 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:59:27 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_philo				 **init_philo(int max_id);
 void				set_philo(char **argv, t_table *table, int buddy_id);
 void				print_philo(t_philo *philo);
 
+void				*death_routine(void	*args);
 void				*alive_routine(void	*args);
 
 int					ft_isspace(char c);

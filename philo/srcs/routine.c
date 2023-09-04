@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 15:46:10 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:24:08 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*alive_routine(void	*args)
 			buddy->time_to_die)
 		{
 			print_died(buddy);
-			buddy->table->died = 1;
+//			buddy->table->died = 1;
 		}
 	}
 	pthread_exit(NULL);
