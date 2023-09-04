@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 18:34:18 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 22:30:57 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static int	check_death(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		gettimeofday(&table->current_time, NULL);
-		if (table->philo[i]->current_time.tv_usec - table->philo[i]->time_since_eating.tv_usec < \
-			table->philo[i]->time_to_die)
+		if (table->philo[i]->is_alive == 0)
 			return (1);
 		i++;
 	}
@@ -44,10 +42,8 @@ void	*death_routine(void	*args)
 	table = (t_table *)args;
 	while (table->died == 0)
 	{
-		if (!check_death(table))
-			usleep(table->philo[0]->time_to_die);
-		else
-			table->died = 1;
+		if (check_death(table))
+			break ;
 	}
 	detach_threads(table);
 	pthread_exit(NULL);
