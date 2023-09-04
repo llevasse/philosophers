@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/02 00:29:33 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:46:10 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
+	if (buddy->id % 2 == 0)
+		usleep(1);
 	while (buddy->table->died == 0)
 	{
 		ft_eat(buddy);
