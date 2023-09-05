@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 12:09:34 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:10:16 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 //	return (0);
 //}
 
-//static void	detach_threads(t_table *table)
-//{
-//	int	i;
-//
-//	i = 0;
-//	while (i < table->nb_philo)
-//		pthread_detach(table->threads[i++]);
-//}
+static void	detach_threads(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nb_philo)
+		pthread_detach(table->threads[i++]);
+}
 
 void	*death_routine(void	*args)
 {
@@ -50,6 +50,7 @@ void	*death_routine(void	*args)
 		}
 		pthread_mutex_unlock(&table->write);
 	}
+	detach_threads(table);
 	pthread_exit(NULL);
 	return (NULL);
 }

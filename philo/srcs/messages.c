@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 12:26:48 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:46:22 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	print_eat(t_philo *buddy)
 	long	time;
 	if (!check_death(buddy))
 		return ;
-	gettimeofday(&buddy->current_time, NULL);
+	gettimeofday(&buddy->time_since_eating, NULL);
 	pthread_mutex_lock(&buddy->table->write);
-	time = buddy->current_time.tv_usec - buddy->table->init_time.tv_usec;
+	time = buddy->time_since_eating.tv_usec - buddy->table->init_time.tv_usec;
 	printf("%ld %d is eating\n", time, buddy->id);
 	pthread_mutex_unlock(&buddy->table->write);
 }
