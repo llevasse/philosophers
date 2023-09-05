@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/04 16:53:08 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:08:12 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_philo {
 
 typedef struct s_table {
 	struct timeval	init_time;
-	int				died;
+	int				alive;
 	int				nb_philo;
 	int				nb_rounds;
 	pthread_t		death;

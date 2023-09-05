@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/02 00:30:34 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:08:42 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_table	*init_table(char **argv)
 	if (!table)
 		return (NULL);
 	set_table_null(table);
-	table->died = 0;
+	table->alive = 1;
 	table->nb_philo = ft_atoi(argv[1]);
 	table->philo = init_philo(table->nb_philo);
 	if (!table->philo)
@@ -37,7 +37,6 @@ t_table	*init_table(char **argv)
 		if (table->philo[i++]->succes != 0)
 			return (free_table(table), NULL);
 	}
-	gettimeofday(&table->init_time, NULL);
 	return (table);
 }
 

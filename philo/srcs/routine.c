@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 09:11:42 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:18:04 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_death(t_philo *buddy)
 	gettimeofday(&buddy->current_time, NULL);
 	time = buddy->current_time.tv_usec - buddy->time_since_eating.tv_usec;
 	pthread_mutex_lock(&buddy->table->write);
-	if (buddy->table->died == 1)
+	if (buddy->table->alive == 0)
 	{
 		pthread_mutex_unlock(&buddy->table->write);
 		return (0);
@@ -38,43 +38,50 @@ int	check_death(t_philo *buddy)
 
 void	wait_time(t_philo *buddy, long time)
 {
-	while (buddy->current_time.tv_usec < time && buddy->table->died == 0)
+	while (buddy->current_time.tv_usec < time && buddy->table->alive == 1)
 		gettimeofday(&buddy->current_time, NULL);
+}
+
+static int	get_fork(t_philo *buddy, pthread_mutex_t fork)
+{
+	while (fork.__data.__lock == 1 && buddy->table->alive == 1)	
+	{
+		if (check_death(buddy) == 0)
+			return (0);
+	}
+	pthread_mutex_lock(&fork);
+	print_take_fork(buddy);
+	return (1);
 }
 
 int	ft_eat(t_philo *buddy)
 {
 	long	time;
 
-	if (buddy->table->died)
-		return (!buddy->table->died);
-	pthread_mutex_lock(&buddy->right_buddy->fork);
-	print_take_fork(buddy);
-	pthread_mutex_lock(&buddy->left_buddy->fork);
-	print_take_fork(buddy);
+	if (buddy->table->alive == 0)
+		return (buddy->table->alive);
+	get_fork(buddy, buddy->fork);
+	get_fork(buddy, buddy->right_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	time = buddy->current_time.tv_usec + buddy->time_to_eat;
-	gettimeofday(&buddy->time_since_eating, NULL);
 	print_eat(buddy);
 	wait_time(buddy, time);
 	pthread_mutex_unlock(&buddy->left_buddy->fork);
-//	print_release_fork(buddy);
 	pthread_mutex_unlock(&buddy->right_buddy->fork);
-//	print_release_fork(buddy);
 	buddy->eaten_times++;
-	return (!buddy->table->died);
+	return (buddy->table->alive);
 }
 
 int	ft_sleep(t_philo *buddy)
 {
 	long	time;
 
-	if (buddy->table->died)
-		return (!buddy->table->died);
+	if (buddy->table->alive == 0)
+		return (buddy->table->alive);
 	time = buddy->current_time.tv_usec + buddy->time_to_sleep;
 	print_sleep(buddy);
 	wait_time(buddy, time);
-	return (!buddy->table->died);
+	return (buddy->table->alive);
 }
 
 void	*alive_routine(void	*args)

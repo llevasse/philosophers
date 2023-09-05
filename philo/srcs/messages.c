@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 09:00:33 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:11:02 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	print_release_fork(t_philo *buddy)
 
 void	print_eat(t_philo *buddy)
 {
+	gettimeofday(&buddy->time_since_eating, NULL);
 	if (!check_death(buddy))
 		return ;
 	pthread_mutex_lock(&buddy->table->write);
@@ -74,7 +75,7 @@ void	print_died(t_philo *buddy)
 {
 	pthread_mutex_lock(&buddy->table->write);
 	buddy->is_alive = 0;
-	buddy->table->died = 1;
+	buddy->table->alive = 0;
 	ft_putnbr_fd(buddy->current_time.tv_usec - buddy->table->init_time.tv_usec, 1);
 	ft_putstr_fd(" \033[0;31m", 1);
 	ft_putnbr_fd(buddy->id, 1);
