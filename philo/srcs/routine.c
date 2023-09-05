@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 10:54:35 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:18:15 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,19 @@ int	ft_eat(t_philo *buddy)
 
 	if (buddy->table->alive == 0)
 		return (buddy->table->alive);
-	get_fork(buddy, &buddy->fork);
+	while (1)
+	{
+		if (buddy->left_buddy->fork.__data.__lock == 0)
+		{
+			get_fork(buddy, &buddy->left_buddy->fork);
+			break ;
+		}
+		else if (buddy->fork.__data.__lock == 0)
+		{
+			get_fork(buddy, &buddy->fork);
+			break ;
+		}
+	}
 	get_fork(buddy, &buddy->right_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	time = buddy->current_time.tv_usec + buddy->time_to_eat;
@@ -91,7 +103,7 @@ void	*alive_routine(void	*args)
 
 	buddy = (t_philo *)args;
 	if (buddy->id % 2)
-		usleep(0);
+		usleep(10);
 	gettimeofday(&buddy->time_since_eating, NULL);
 	while (42)
 	{
