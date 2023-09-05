@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 20:37:04 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 20:54:05 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	check_death(t_philo *buddy)
 		return (0);
 	}
 	pthread_mutex_unlock(&buddy->table->write);
-//	gettimeofday(&buddy->current_time, NULL);
 	time = timestamp() - buddy->time_since_eat;
 	if (time > buddy->time_to_die)
 		return (print_died(buddy), 0);
@@ -80,15 +79,12 @@ int	ft_eat(t_philo *buddy)
 	print_take_fork(buddy);
 	right_fork = choose_fork(buddy);
 	print_take_fork(buddy);
-//	gettimeofday(&buddy->time_since_eating, NULL);
 	buddy->time_since_eat = timestamp();
 	time = buddy->time_since_eat + buddy->time_to_eat;
 	print_eat(buddy);
 	wait_time(buddy, time);
 	pthread_mutex_unlock(left_fork);
-	print_release_fork(buddy);
 	pthread_mutex_unlock(right_fork);
-	print_release_fork(buddy);
 	buddy->eaten_times++;
 	return (1);
 }
@@ -110,10 +106,8 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-//	gettimeofday(&buddy->init_time, NULL);
 	buddy->init_time = timestamp();
 	buddy->time_since_eat = timestamp();
-//	gettimeofday(&buddy->time_since_eating, NULL);
 	while (42)
 	{
 		if (!ft_eat(buddy))
