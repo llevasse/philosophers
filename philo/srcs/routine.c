@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 20:54:05 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 21:05:12 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	wait_time(t_philo *buddy, long time)
 	long long	i;
 
 	i = 0;
-	while (i < time/* && check_death(buddy)*/)
+	while (i < time && check_death(buddy))
 	{
 		i = timestamp();
 	}
@@ -86,7 +86,7 @@ int	ft_eat(t_philo *buddy)
 	pthread_mutex_unlock(left_fork);
 	pthread_mutex_unlock(right_fork);
 	buddy->eaten_times++;
-	return (1);
+	return (check_death(buddy));
 }
 
 int	ft_sleep(t_philo *buddy)
@@ -98,7 +98,7 @@ int	ft_sleep(t_philo *buddy)
 	print_sleep(buddy);
 	time = timestamp() + buddy->time_to_sleep;
 	wait_time(buddy, time);
-	return (1);
+	return (check_death(buddy));
 }
 
 void	*alive_routine(void	*args)
