@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 10:08:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 11:00:27 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_table {
 	int				nb_rounds;
 	pthread_t		death;
 	pthread_t		*threads;
+	pthread_mutex_t	dead;
 	pthread_mutex_t	write;
 	t_philo			**philo;
 	struct timeval	current_time;

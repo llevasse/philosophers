@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 08:55:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:09:34 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,21 @@
 //		pthread_detach(table->threads[i++]);
 //}
 
-//void	*death_routine(void	*args)
-//{
-//	t_table	*table;
-//
-//	table = (t_table *)args;
-//	while (table->died == 0)
-//	{
-//		pthread_mutex_lock(&table->write);
-//		if (check_death(table))
-//			table->died = 1;
-//		pthread_mutex_unlock(&table->write);
-//	}
-//	detach_threads(table);
-//	pthread_exit(NULL);
-//	return (NULL);
-//}
+void	*death_routine(void	*args)
+{
+	t_table	*table;
+
+	table = (t_table *)args;
+	while (table->alive == 1)
+	{
+		pthread_mutex_lock(&table->write);
+		if (table->alive == 0)
+		{
+			pthread_mutex_unlock(&table->write);
+			break ;
+		}
+		pthread_mutex_unlock(&table->write);
+	}
+	pthread_exit(NULL);
+	return (NULL);
+}
