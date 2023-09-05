@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 13:42:54 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:51:59 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int	ft_eat(t_philo *buddy)
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 
-	if (buddy->table->alive == 0)
-		return (buddy->table->alive);
+	if (!check_death(buddy))
+		return (0);
 	left_fork = choose_fork(buddy);
 	right_fork = choose_fork(buddy);
 	gettimeofday(&buddy->current_time, NULL);
@@ -94,20 +94,19 @@ int	ft_eat(t_philo *buddy)
 	pthread_mutex_unlock(left_fork);
 	pthread_mutex_unlock(right_fork);
 	buddy->eaten_times++;
-	return (buddy->table->alive);
+	return (1);
 }
 
 int	ft_sleep(t_philo *buddy)
 {
 	long	time;
 
-	check_death(buddy);
-	if (buddy->table->alive == 0)
-		return (buddy->table->alive);
+	if (!check_death(buddy))
+		return (0);
 	print_sleep(buddy);
 	time = buddy->current_time.tv_usec + buddy->time_to_sleep;
 	wait_time(buddy, time);
-	return (buddy->table->alive);
+	return (1);
 }
 
 void	*alive_routine(void	*args)
