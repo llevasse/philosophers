@@ -6,13 +6,13 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 08:47:36 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 09:03:22 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	check_death(t_philo *buddy)
+int	check_death(t_philo *buddy)
 {
 	long	time;
 
@@ -41,10 +41,8 @@ int	ft_eat(t_philo *buddy)
 	long	time;
 
 	pthread_mutex_lock(&buddy->right_buddy->fork);
-	gettimeofday(&buddy->current_time, NULL);
 	print_take_fork(buddy);
 	pthread_mutex_lock(&buddy->left_buddy->fork);
-	gettimeofday(&buddy->current_time, NULL);
 	print_take_fork(buddy);
 	gettimeofday(&buddy->current_time, NULL);
 	time = buddy->current_time.tv_usec + buddy->time_to_eat;
@@ -53,13 +51,11 @@ int	ft_eat(t_philo *buddy)
 	while (buddy->current_time.tv_usec < time)
 		gettimeofday(&buddy->current_time, NULL);
 	pthread_mutex_unlock(&buddy->left_buddy->fork);
-	gettimeofday(&buddy->current_time, NULL);
-	print_release_fork(buddy);
+//	print_release_fork(buddy);
 	pthread_mutex_unlock(&buddy->right_buddy->fork);
-	gettimeofday(&buddy->current_time, NULL);
-	print_release_fork(buddy);
+//	print_release_fork(buddy);
 	buddy->eaten_times++;
-	return (check_death(buddy));
+	return (buddy->is_alive);
 }
 
 int	ft_sleep(t_philo *buddy)
@@ -70,7 +66,7 @@ int	ft_sleep(t_philo *buddy)
 	print_sleep(buddy);
 	while (buddy->current_time.tv_usec < time)
 		gettimeofday(&buddy->current_time, NULL);
-	return (check_death(buddy));
+	return (buddy->is_alive);
 }
 
 void	*alive_routine(void	*args)
@@ -78,6 +74,7 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
+	gettimeofday(&buddy->time_since_eating, NULL);
 	while (42)
 	{
 		if (!ft_eat(buddy))

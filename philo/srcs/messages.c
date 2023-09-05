@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 00:45:38 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 09:00:33 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	print_take_fork(t_philo *buddy)
 {
+	if (!check_death(buddy))
+		return ;
+	gettimeofday(&buddy->current_time, NULL);
 	pthread_mutex_lock(&buddy->table->write);
 	ft_putnbr_fd(buddy->current_time.tv_usec - buddy->table->init_time.tv_usec, 1);
 	ft_putstr_fd(" ", 1);
@@ -24,6 +27,9 @@ void	print_take_fork(t_philo *buddy)
 
 void	print_release_fork(t_philo *buddy)
 {
+	if (!check_death(buddy))
+		return ; 
+	gettimeofday(&buddy->current_time, NULL);
 	pthread_mutex_lock(&buddy->table->write);
 	ft_putnbr_fd(buddy->current_time.tv_usec - buddy->table->init_time.tv_usec, 1);
 	ft_putstr_fd(" ", 1);
@@ -34,6 +40,8 @@ void	print_release_fork(t_philo *buddy)
 
 void	print_eat(t_philo *buddy)
 {
+	if (!check_death(buddy))
+		return ;
 	pthread_mutex_lock(&buddy->table->write);
 	ft_putnbr_fd(buddy->current_time.tv_usec - buddy->table->init_time.tv_usec, 1);
 	ft_putstr_fd(" ", 1);
