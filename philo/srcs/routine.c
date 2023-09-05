@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 00:46:58 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 08:47:36 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,19 @@ static int	check_death(t_philo *buddy)
 
 	gettimeofday(&buddy->current_time, NULL);
 	time = buddy->current_time.tv_usec - buddy->time_since_eating.tv_usec;
-//	pthread_mutex_lock(&buddy->table->write);
+	pthread_mutex_lock(&buddy->table->write);
+	if (buddy->table->died == 1)
+	{
+		pthread_mutex_unlock(&buddy->table->write);
+		return (0);
+	}
 //	ft_putstr_fd("\033[0;33m", 1);
 //	ft_putnbr_fd(time , 1);
 //	ft_putstr_fd(" ", 1);
 //	ft_putnbr_fd(buddy->id, 1);
 //	ft_putstr_fd(" time since eating\n", 1);
 //	ft_putstr_fd("\033[0m", 1);
-//	pthread_mutex_unlock(&buddy->table->write);
+	pthread_mutex_unlock(&buddy->table->write);
 	if (time > buddy->time_to_die)
 		return (print_died(buddy), 0);
 	return (1);
@@ -83,5 +88,4 @@ void	*alive_routine(void	*args)
 		print_think(buddy);
 	}
 	pthread_exit(NULL);
-	return (NULL);
 }
