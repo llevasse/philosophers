@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 21:05:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 21:41:18 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,17 @@ void	wait_time(t_philo *buddy, long time)
 
 static pthread_mutex_t	*choose_fork(t_philo *buddy)
 {
-	while (1)
+	while (check_death(buddy))
 	{
-		if (buddy->fork.__data.__lock == 0)
+		/*if (buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->fork);
 			return (&buddy->fork);
+		}*/
+		if (buddy->left_buddy->fork.__data.__lock == 0)
+		{
+			pthread_mutex_lock(&buddy->left_buddy->fork);
+			return (&buddy->left_buddy->fork);
 		}
 		else if (buddy->right_buddy->fork.__data.__lock == 0)
 		{
@@ -64,7 +69,7 @@ static pthread_mutex_t	*choose_fork(t_philo *buddy)
 			return (&buddy->right_buddy->fork);
 		}
 	}
-
+	return (NULL);
 }
 
 int	ft_eat(t_philo *buddy)
@@ -73,11 +78,16 @@ int	ft_eat(t_philo *buddy)
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 
+	print_think(buddy);
 	if (!check_death(buddy))
 		return (0);
 	left_fork = choose_fork(buddy);
+	if (!left_fork)
+		return (0);
 	print_take_fork(buddy);
 	right_fork = choose_fork(buddy);
+	if (!right_fork)
+		return ((void)pthread_mutex_unlock(left_fork), 0);
 	print_take_fork(buddy);
 	buddy->time_since_eat = timestamp();
 	time = buddy->time_since_eat + buddy->time_to_eat;
@@ -113,9 +123,6 @@ void	*alive_routine(void	*args)
 		if (!ft_eat(buddy))
 			break ;
 		if (!ft_sleep(buddy))
-			break ;
-		print_think(buddy);
-		if (!check_death(buddy))
 			break ;
 	}
 	pthread_exit(NULL);
