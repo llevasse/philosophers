@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 10:18:04 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:54:35 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	wait_time(t_philo *buddy, long time)
 		gettimeofday(&buddy->current_time, NULL);
 }
 
-static int	get_fork(t_philo *buddy, pthread_mutex_t fork)
+static int	get_fork(t_philo *buddy, pthread_mutex_t *fork)
 {
-	while (fork.__data.__lock == 1 && buddy->table->alive == 1)	
+	while (fork->__data.__lock == 1 && buddy->table->alive == 1)	
 	{
 		if (check_death(buddy) == 0)
 			return (0);
 	}
-	pthread_mutex_lock(&fork);
+	pthread_mutex_lock(fork);
 	print_take_fork(buddy);
 	return (1);
 }
@@ -60,13 +60,13 @@ int	ft_eat(t_philo *buddy)
 
 	if (buddy->table->alive == 0)
 		return (buddy->table->alive);
-	get_fork(buddy, buddy->fork);
-	get_fork(buddy, buddy->right_buddy->fork);
+	get_fork(buddy, &buddy->fork);
+	get_fork(buddy, &buddy->right_buddy->fork);
 	gettimeofday(&buddy->current_time, NULL);
 	time = buddy->current_time.tv_usec + buddy->time_to_eat;
 	print_eat(buddy);
 	wait_time(buddy, time);
-	pthread_mutex_unlock(&buddy->left_buddy->fork);
+	pthread_mutex_unlock(&buddy->fork);
 	pthread_mutex_unlock(&buddy->right_buddy->fork);
 	buddy->eaten_times++;
 	return (buddy->table->alive);
@@ -76,10 +76,11 @@ int	ft_sleep(t_philo *buddy)
 {
 	long	time;
 
+	check_death(buddy);
 	if (buddy->table->alive == 0)
 		return (buddy->table->alive);
-	time = buddy->current_time.tv_usec + buddy->time_to_sleep;
 	print_sleep(buddy);
+	time = buddy->current_time.tv_usec + buddy->time_to_sleep;
 	wait_time(buddy, time);
 	return (buddy->table->alive);
 }
@@ -89,6 +90,8 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
+	if (buddy->id % 2)
+		usleep(0);
 	gettimeofday(&buddy->time_since_eating, NULL);
 	while (42)
 	{
