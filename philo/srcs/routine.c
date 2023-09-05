@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 21:41:18 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/06 00:37:58 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,25 @@ int	check_death(t_philo *buddy)
 
 void	wait_time(t_philo *buddy, long time)
 {
-	long long	i;
-
-	i = 0;
-	while (i < time && check_death(buddy))
-	{
-		i = timestamp();
-	}
-	(void)buddy;
+	while (timestamp() < time && check_death(buddy))
+		;
 }
 
 static pthread_mutex_t	*choose_fork(t_philo *buddy)
 {
 	while (check_death(buddy))
 	{
-		/*if (buddy->fork.__data.__lock == 0)
+		if (buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->fork);
 			return (&buddy->fork);
-		}*/
+		}
 		if (buddy->left_buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->left_buddy->fork);
 			return (&buddy->left_buddy->fork);
 		}
-		else if (buddy->right_buddy->fork.__data.__lock == 0)
+		if (buddy->right_buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->right_buddy->fork);
 			return (&buddy->right_buddy->fork);
@@ -116,7 +110,8 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-	buddy->init_time = timestamp();
+	if (buddy->id % 2)
+		usleep(10);
 	buddy->time_since_eat = timestamp();
 	while (42)
 	{

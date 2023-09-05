@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 20:32:55 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/06 00:37:51 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_philo {
 	int				time_to_die;
 	int				time_to_eat;
 	long long		time_since_eat;
-//	struct timeval	time_since_eating;
 	int				time_to_sleep;
 	int				eaten_times;
 	int				succes;
@@ -34,7 +33,7 @@ typedef struct s_philo {
 }	t_philo;
 
 typedef struct s_table {
-	struct timeval	init_time;
+	long long		init_time;
 	int				alive;
 	int				nb_philo;
 	int				nb_rounds;
