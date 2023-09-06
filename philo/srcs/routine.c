@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/06 00:37:58 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/06 23:28:57 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	*alive_routine(void	*args)
 	t_philo	*buddy;
 
 	buddy = (t_philo *)args;
-	if (buddy->id % 2)
-		usleep(10);
+	if (buddy->id % 2 == 0)
+		usleep(1000000);
 	buddy->time_since_eat = timestamp();
 	while (42)
 	{
