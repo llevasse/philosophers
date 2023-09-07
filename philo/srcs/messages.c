@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 16:29:46 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:36:26 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	print_take_fork(t_philo *buddy, int id)
 	pthread_mutex_lock(&buddy->table->write);
 	time = timestamp() - buddy->table->init_time;
 	printf("%lld %d has taken a fork (id %d)\n", time, buddy->id, id);
-	printf("fork id available :");
-	while (i < buddy->table->nb_philo)
-	{
-		if (buddy->table->philo[i]->fork.__data.__lock == 0)
-			printf(" %d", i);
-		i++;
-	}
-	printf("\n");
+//	printf("fork id available :");
+//	while (i < buddy->table->nb_philo)
+//	{
+//		if (buddy->table->philo[i]->fork.__data.__lock == 0)
+//			printf(" %d", i);
+//		i++;
+//	}
+//	printf("\n");
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
@@ -63,7 +63,7 @@ void	print_eat(t_philo *buddy)
 		return ;
 	pthread_mutex_lock(&buddy->table->write);
 	time = buddy->time_since_eat - buddy->table->init_time;
-	printf("%lld %d is eating\n", time, buddy->id);
+	printf("%lld %d\033[0;32m is eating\033[0m\n", time, buddy->id);
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
@@ -74,7 +74,7 @@ void	print_sleep(t_philo *buddy)
 		return ;
 	pthread_mutex_lock(&buddy->table->write);
 	time = timestamp() - buddy->table->init_time;
-	printf("%lld %d is sleeping\n", time, buddy->id);
+	printf("%lld %d\033[0;33m is sleeping\033[0m\n", time, buddy->id);
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
