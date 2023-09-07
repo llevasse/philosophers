@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 16:45:33 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:14:21 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_table	*init_table(char **argv)
 	if (!table)
 		return (NULL);
 	set_table_null(table);
-	table->alive = 1;
 	table->nb_philo = ft_atoi(argv[1]);
 	table->philo = init_philo(table->nb_philo);
 	if (!table->philo)
@@ -43,6 +42,7 @@ t_table	*init_table(char **argv)
 void	set_table_null(t_table *table)
 {
 	table->philo = NULL;
+	table->alive = 1;
 	table->threads = NULL;
 }
 

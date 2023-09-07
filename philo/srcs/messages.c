@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 17:36:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:04:16 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	print_eat(t_philo *buddy)
 	pthread_mutex_lock(&buddy->table->write);
 	time = buddy->time_since_eat - buddy->table->init_time;
 	printf("%lld %d\033[0;32m is eating\033[0m\n", time, buddy->id);
+	buddy->eaten_times++;
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
