@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 15:32:46 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:56:46 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,29 @@ int	check_death(t_philo *buddy)
 	return (1);
 }
 
-static pthread_mutex_t	*choose_fork(t_philo *buddy)
+static pthread_mutex_t	*choose_fork(t_philo *buddy, int *id)
 {
 	while (check_death(buddy))
 	{
 		if (buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->fork);
-			print_take_fork(buddy);
+			print_take_fork(buddy, buddy->id);
+			*id = buddy->id;
 			return (&buddy->fork);
 		}
 		if (buddy->left_buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->left_buddy->fork);
-			print_take_fork(buddy);
+			print_take_fork(buddy, buddy->left_buddy->id);
+			*id = buddy->left_buddy->id;
 			return (&buddy->left_buddy->fork);
 		}
 		if (buddy->right_buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->right_buddy->fork);
-			print_take_fork(buddy);
+			print_take_fork(buddy, buddy->right_buddy->id);
+			*id = buddy->right_buddy->id;
 			return (&buddy->right_buddy->fork);
 		}
 	}
@@ -57,17 +60,19 @@ static pthread_mutex_t	*choose_fork(t_philo *buddy)
 
 int	ft_eat(t_philo *buddy)
 {
-	long	time;
+	long			time;
 	pthread_mutex_t	*left_fork;
+	int				left_id;
 	pthread_mutex_t	*right_fork;
+	int				right_id;
 
 	print_think(buddy);
 	if (!check_death(buddy))
 		return (0);
-	left_fork = choose_fork(buddy);
+	left_fork = choose_fork(buddy, &left_id);
 	if (!left_fork)
 		return (0);
-	right_fork = choose_fork(buddy);
+	right_fork = choose_fork(buddy, &right_id);
 	if (!right_fork)
 		return ((void)pthread_mutex_unlock(left_fork), 0);
 	buddy->time_since_eat = timestamp();
@@ -75,7 +80,9 @@ int	ft_eat(t_philo *buddy)
 	print_eat(buddy);
 	wait_time(buddy, time);
 	pthread_mutex_unlock(left_fork);
+	print_release_fork(buddy, left_id);
 	pthread_mutex_unlock(right_fork);
+	print_release_fork(buddy, right_id);
 	return (check_death(buddy));
 }
 
@@ -97,7 +104,7 @@ void	*alive_routine(void	*args)
 
 	buddy = (t_philo *)args;
 	if (buddy->id % 2 == 0)
-		usleep(1000000);
+		usleep(1000);
 	buddy->time_since_eat = timestamp();
 	while (42)
 	{

@@ -6,32 +6,53 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 12:44:13 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:29:46 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_take_fork(t_philo *buddy)
+void	print_take_fork(t_philo *buddy, int id)
 {
 	long long	time;
+	int			i;
+
 	if (!check_death(buddy))
 		return ;
+	i = 0;
 	pthread_mutex_lock(&buddy->table->write);
 	time = timestamp() - buddy->table->init_time;
-	printf("%lld %d has taken a fork\n", time, buddy->id);
+	printf("%lld %d has taken a fork (id %d)\n", time, buddy->id, id);
+	printf("fork id available :");
+	while (i < buddy->table->nb_philo)
+	{
+		if (buddy->table->philo[i]->fork.__data.__lock == 0)
+			printf(" %d", i);
+		i++;
+	}
+	printf("\n");
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
-void	print_release_fork(t_philo *buddy)
+void	print_release_fork(t_philo *buddy, int id)
 {
+	long long	time;
+	int			i;
+
 	if (!check_death(buddy))
-		return ; 
+		return ;
+	i = 0;
 	pthread_mutex_lock(&buddy->table->write);
-	ft_putnbr_fd(timestamp() - buddy->table->init_time, 1);
-	ft_putstr_fd(" ", 1);
-	ft_putnbr_fd(buddy->id, 1);
-	ft_putstr_fd(" has released a fork\n", 1);
+	time = timestamp() - buddy->table->init_time;
+	printf("%lld %d has released a fork (id %d)\n", time, buddy->id, id);
+	printf("fork id available :");
+	while (i < buddy->table->nb_philo)
+	{
+		if (buddy->table->philo[i]->fork.__data.__lock == 0)
+			printf(" %d", i);
+		i++;
+	}
+	printf("\n");
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
