@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 11:10:28 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:07:28 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ static pthread_mutex_t	*choose_fork(t_philo *buddy)
 			pthread_mutex_lock(&buddy->fork);
 			print_take_fork(buddy);
 			return (&buddy->fork);
-		}
-		if (buddy->left_buddy->fork.__data.__lock == 0)
-		{
-			pthread_mutex_lock(&buddy->left_buddy->fork);
-			print_take_fork(buddy);
-			return (&buddy->left_buddy->fork);
 		}
 		if (buddy->right_buddy->fork.__data.__lock == 0)
 		{

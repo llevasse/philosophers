@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 10:08:42 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:41:53 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ void	free_table(t_table *table)
 		while (table->philo[i])
 		{
 			if (table->philo[i]->succes == 0)
+			{
+				while (table->philo[i]->fork.__data.__lock == 1)
+					;
 				pthread_mutex_destroy(&table->philo[i]->fork);
+				table->philo[i]->succes = 1;
+			}
 			free(table->philo[i++]);
 		}
 		free(table->philo);
