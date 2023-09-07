@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 11:03:57 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:10:28 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	check_death(t_philo *buddy)
 {
 	long	time;
 
-	pthread_mutex_lock(&buddy->table->write);
+	pthread_mutex_lock(&buddy->table->read);
 	if (buddy->table->alive == 0)
 	{
-		pthread_mutex_unlock(&buddy->table->write);
+		pthread_mutex_unlock(&buddy->table->read);
 		return (0);
 	}
-	pthread_mutex_unlock(&buddy->table->write);
+	pthread_mutex_unlock(&buddy->table->read);
 	time = timestamp() - buddy->time_since_eat;
 	if (time > buddy->time_to_die)
 		return (print_died(buddy), 0);
@@ -36,16 +36,19 @@ static pthread_mutex_t	*choose_fork(t_philo *buddy)
 		if (buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->fork);
+			print_take_fork(buddy);
 			return (&buddy->fork);
 		}
 		if (buddy->left_buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->left_buddy->fork);
+			print_take_fork(buddy);
 			return (&buddy->left_buddy->fork);
 		}
 		if (buddy->right_buddy->fork.__data.__lock == 0)
 		{
 			pthread_mutex_lock(&buddy->right_buddy->fork);
+			print_take_fork(buddy);
 			return (&buddy->right_buddy->fork);
 		}
 	}
@@ -64,18 +67,15 @@ int	ft_eat(t_philo *buddy)
 	left_fork = choose_fork(buddy);
 	if (!left_fork)
 		return (0);
-	print_take_fork(buddy);
 	right_fork = choose_fork(buddy);
 	if (!right_fork)
 		return ((void)pthread_mutex_unlock(left_fork), 0);
-	print_take_fork(buddy);
 	buddy->time_since_eat = timestamp();
 	time = buddy->time_since_eat + buddy->time_to_eat;
 	print_eat(buddy);
 	wait_time(buddy, time);
 	pthread_mutex_unlock(left_fork);
 	pthread_mutex_unlock(right_fork);
-	buddy->eaten_times++;
 	return (check_death(buddy));
 }
 
@@ -103,6 +103,7 @@ void	*alive_routine(void	*args)
 	{
 		if (!ft_eat(buddy))
 			break ;
+		buddy->eaten_times++;
 		if (!ft_sleep(buddy))
 			break ;
 	}
