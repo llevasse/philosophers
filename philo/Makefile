@@ -11,6 +11,7 @@ SRC				=	srcs/main.c \
 					srcs/checkers.c \
 					srcs/table_utils.c \
 					srcs/philo.c \
+					srcs/time.c \
 					srcs/routine.c \
 					srcs/death_routine.c \
 					srcs/ft_strlen.c \

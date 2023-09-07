@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/05 20:34:01 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:04:45 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void				set_philo(char **argv, t_table *table, int buddy_id);
 void				print_philo(t_philo *philo);
 
 long long			timestamp(void);
+void				wait_time(t_philo *buddy, long time);
+
 void				*death_routine(void	*args);
 void				*alive_routine(void	*args);
 int					check_death(t_philo *buddy);

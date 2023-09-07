@@ -6,19 +6,11 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/06 23:28:57 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:03:57 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-long long	timestamp(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
 
 int	check_death(t_philo *buddy)
 {
@@ -35,12 +27,6 @@ int	check_death(t_philo *buddy)
 	if (time > buddy->time_to_die)
 		return (print_died(buddy), 0);
 	return (1);
-}
-
-void	wait_time(t_philo *buddy, long time)
-{
-	while (timestamp() < time && check_death(buddy))
-		;
 }
 
 static pthread_mutex_t	*choose_fork(t_philo *buddy)
