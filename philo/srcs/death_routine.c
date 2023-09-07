@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 11:58:49 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:22:11 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //	return (0);
 //}
 
-static void	detach_threads(t_table *table)
+void	detach_threads(t_table *table)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ void	*death_routine(void	*args)
 		if (table->alive == 0)
 		{
 			pthread_mutex_unlock(&table->read);
-			detach_threads(table);
+//			detach_threads(table);
 			break ;
 		}
 		pthread_mutex_unlock(&table->read);
