@@ -42,7 +42,7 @@ $(OBJS_DIR):
 all:				$(NAME)
 
 norm:
-					@normiette $(SRC) $(HEADER_DIR) | awk '$$NF!="OK!" {print "$(RED)" $$0 "$(NC)"}'
+					@norminette $(SRC) $(HEADER_DIR) | awk '$$NF!="OK!" {print "$(RED)" $$0 "$(NC)"}'
 					
 clean:
 				@echo "$(RED)Deleting $(NAME) object...\n"
