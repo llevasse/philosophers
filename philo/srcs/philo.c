@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 11:30:44 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/08 22:35:40 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ void	create_threads(t_table *table)
 {
 	int	i;
 
-	table->init_time = timestamp();
+	pthread_mutex_lock(&table->read);
 	add_odd(table);
-	usleep(1000);
 	add_even(table);
+	table->init_time = timestamp();
+	pthread_mutex_unlock(&table->read);
+	usleep(1000);
 	if (pthread_create(&table->death, NULL, &death_routine, table))
 		return ;
 	i = 0;
