@@ -6,21 +6,21 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 22:35:40 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/08 22:53:56 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	add_odd(t_table *table)
+int	add_philo_thread(t_table *table)
 {
 	int	i;
 
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		if (i % 2 == 0 && pthread_create(&table->threads[i], 
-				NULL, &alive_routine, table->philo[i]))
+		if (pthread_create(
+			&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return (0);
 		i++;
 	}
@@ -47,11 +47,9 @@ void	create_threads(t_table *table)
 	int	i;
 
 	pthread_mutex_lock(&table->read);
-	add_odd(table);
-	add_even(table);
+	add_philo_thread(table);
 	table->init_time = timestamp();
 	pthread_mutex_unlock(&table->read);
-	usleep(1000);
 	if (pthread_create(&table->death, NULL, &death_routine, table))
 		return ;
 	i = 0;
