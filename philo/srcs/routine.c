@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 22:58:15 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/09 00:29:30 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	check_death(t_philo *buddy)
 	pthread_mutex_unlock(&buddy->table->read);
 	time = timestamp() - buddy->time_since_eat;
 	if (time > buddy->time_to_die)
-		return (print_died(buddy), 0);
+	{
+		print_died(buddy);
+		pthread_exit(0);
+	}
 	return (1);
 }
 
@@ -33,15 +36,23 @@ static void	choose_fork(t_philo *buddy)
 {
 	if (buddy->id < buddy->right_buddy->id)
 	{
+		while (buddy->right_buddy->fork.__data.__lock == 1)
+			check_death(buddy);
 		pthread_mutex_lock(&buddy->right_buddy->fork);
 		print_take_fork(buddy);
+		while (buddy->fork.__data.__lock == 1)
+			check_death(buddy);
 		pthread_mutex_lock(&buddy->fork);
 		print_take_fork(buddy);
 	}
 	else
 	{
+		while (buddy->fork.__data.__lock == 1)
+			check_death(buddy);
 		pthread_mutex_lock(&buddy->fork);
 		print_take_fork(buddy);
+		while (buddy->right_buddy->fork.__data.__lock == 1)
+			check_death(buddy);
 		pthread_mutex_lock(&buddy->right_buddy->fork);
 		print_take_fork(buddy);
 	}
