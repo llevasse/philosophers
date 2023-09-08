@@ -6,13 +6,13 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 11:32:32 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/08 11:33:45 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_take_fork(t_philo *buddy, int id)
+void	print_take_fork(t_philo *buddy)
 {
 	long long	time;
 
@@ -20,7 +20,7 @@ void	print_take_fork(t_philo *buddy, int id)
 		return ;
 	pthread_mutex_lock(&buddy->table->write);
 	time = timestamp() - buddy->table->init_time;
-	printf("%lld %d has taken a fork\n", time, buddy->id, id);
+	printf("%lld %d has taken a fork\n", time, buddy->id);
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
