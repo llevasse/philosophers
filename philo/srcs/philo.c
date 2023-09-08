@@ -6,21 +6,40 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 23:18:01 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/08 11:30:44 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_philo(t_philo *philo)
+int	add_odd(t_table *table)
 {
-	printf("philo id : %d\n", philo->id);
-	printf("philo time to die : %d\n", philo->time_to_die);
-	printf("philo time to eat : %d\n", philo->time_to_eat);
-	printf("philo time to sleep : %d\n", philo->time_to_sleep);
-	printf("philo left buddy id : %d\n", philo->left_buddy->id);
-	printf("philo right buddy id : %d\n", philo->right_buddy->id);
-	printf("\n");
+	int	i;
+
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		if (i % 2 == 0 && pthread_create(&table->threads[i], 
+				NULL, &alive_routine, table->philo[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	add_even(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		if (i % 2 != 0 && pthread_create(&table->threads[i], 
+				NULL, &alive_routine, table->philo[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	create_threads(t_table *table)
@@ -28,21 +47,9 @@ void	create_threads(t_table *table)
 	int	i;
 
 	table->init_time = timestamp();
-	i = 0;
-	while (i < table->nb_philo)
-	{
-		if (i % 2 == 0 && pthread_create(&table->threads[i], NULL, &alive_routine, table->philo[i]))
-			return ;
-		i++;
-	}
+	add_odd(table);
 	usleep(1000);
-	i = 0;
-	while (i < table->nb_philo)
-	{
-		if (i % 2 != 0 && pthread_create(&table->threads[i], NULL, &alive_routine, table->philo[i]))
-			return ;
-		i++;
-	}
+	add_even(table);
 	if (pthread_create(&table->death, NULL, &death_routine, table))
 		return ;
 	i = 0;
@@ -56,7 +63,7 @@ void	create_threads(t_table *table)
 		return ;
 }
 
-t_philo **init_philo(int max_id)
+t_philo	**init_philo(int max_id)
 {
 	t_philo	**philo;
 	int		i;
@@ -82,7 +89,6 @@ t_philo **init_philo(int max_id)
 		return (NULL);
 	}
 	return (philo);
-
 }
 
 void	set_philo(char **argv, t_table *table, int buddy_id)

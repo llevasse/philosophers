@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 23:14:21 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/08 11:25:58 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_table	*init_table(char **argv)
 {
-	t_table *table;
-	int	i;
+	t_table	*table;
+	int		i;
 
 	i = 0;
 	table = malloc(sizeof(struct s_table));
