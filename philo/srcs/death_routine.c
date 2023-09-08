@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 00:28:36 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/08 11:47:04 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	*death_routine(void	*args)
 	while (1)
 	{
 		pthread_mutex_lock(&table->read);
-		table->alive = check_eat_times(table);
+		if (table->alive == 1)
+			table->alive = check_eat_times(table);
 		if (table->alive == 0)
 		{
 			pthread_mutex_unlock(&table->read);
