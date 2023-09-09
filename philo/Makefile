@@ -13,6 +13,7 @@ SRC				=	srcs/main.c \
 					srcs/philo.c \
 					srcs/time.c \
 					srcs/routine.c \
+					srcs/choose_fork.c \
 					srcs/death_routine.c \
 					srcs/ft_strlen.c \
 					srcs/messages.c \
