@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 21:34:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 21:48:53 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 00:17:43 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ int	choose_fork(t_philo *buddy, long long time)
 	print_take_fork(buddy, time);
 	return (1);
 }
-
