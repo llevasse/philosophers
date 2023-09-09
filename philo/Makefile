@@ -25,7 +25,8 @@ OBJS_DIR		=	.OBJS/
 OBJS			=	$(addprefix $(OBJS_DIR), $(SRC:.c=.o))
 
 HEADER_DIR		=	headers/
-HEADER_FILE		=	headers/philosophers.h
+HEADER_FILE		=	headers/philosophers.h \
+					headers/struct.h
 
 $(NAME):			$(OBJS_DIR) Makefile $(HEADER_FILE) $(OBJS)
 					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) $(OBJS) -lpthread -lrt -o $@

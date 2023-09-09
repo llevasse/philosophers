@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/07 11:09:41 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/09 20:39:38 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "philosophers.h"
 
 typedef struct s_philo {
-	long long		current_time;
-	long long		init_time;
 	int				is_alive;
 	int				id;
 	int				time_to_die;
@@ -39,11 +37,9 @@ typedef struct s_table {
 	int				nb_rounds;
 	pthread_t		death;
 	pthread_t		*threads;
-	pthread_mutex_t	dead;
 	pthread_mutex_t	write;
 	pthread_mutex_t	read;
 	t_philo			**philo;
-	struct timeval	current_time;
 }	t_table;
 
 #endif
