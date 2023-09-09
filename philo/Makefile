@@ -1,4 +1,4 @@
-NAME			=	philosophers
+NAME			=	philo
 CC				=	cc
 FLAGS			=	-Wall -Werror -Wextra -fsanitize=thread 
 RM				=	rm -rf
