@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 00:35:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/09 17:12:21 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static void	choose_fork(t_philo *buddy)
 
 int	ft_eat(t_philo *buddy)
 {
-	long			time;
-
 	print_think(buddy);
 	if (!check_death(buddy))
 		return (0);
@@ -75,9 +73,8 @@ int	ft_eat(t_philo *buddy)
 	if (!check_death(buddy))
 		return (0);
 	buddy->time_since_eat = timestamp();
-	time = buddy->time_since_eat + buddy->time_to_eat;
 	print_eat(buddy);
-	wait_time(buddy, time);
+	wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat);
 	pthread_mutex_unlock(&buddy->fork);
 	pthread_mutex_unlock(&buddy->right_buddy->fork);
 	return (check_death(buddy));
