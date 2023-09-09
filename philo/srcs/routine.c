@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 21:33:58 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/09 22:18:35 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,22 @@ int	check_death(t_philo *buddy, long long time)
 int	ft_eat(t_philo *buddy, long long time)
 {
 	print_think(buddy, time);
-	if (!check_death(buddy, time))
-		return (0);
-	choose_fork(buddy, time);
-	if (!check_death(buddy, time))
-		return (0);
-	buddy->time_since_eat = timestamp();
-	print_eat(buddy, time);
-	wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
-	pthread_mutex_unlock(&buddy->fork);
-	pthread_mutex_unlock(&buddy->right_buddy->fork);
+	if (choose_fork(buddy, time))
+	{
+		buddy->time_since_eat = timestamp();
+		print_eat(buddy, time);
+		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
+		pthread_mutex_unlock(&buddy->fork);
+		pthread_mutex_unlock(&buddy->right_buddy->fork);
+	}
 	return (check_death(buddy, time));
 }
 
 int	ft_sleep(t_philo *buddy, long long time)
 {
-	if (!check_death(buddy, time))
-		return (0);
+	time = timestamp() + buddy->time_to_sleep;
 	print_sleep(buddy, time);
-	wait_time(buddy, timestamp() + buddy->time_to_sleep, time);
+	wait_time(buddy, time, time);
 	return (check_death(buddy, time));
 }
 
