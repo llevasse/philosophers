@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 17:12:21 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:16:12 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,42 @@ int	check_death(t_philo *buddy)
 	return (1);
 }
 
+static void	choose_higher(t_philo *buddy)
+{
+	while (buddy->right_buddy->fork.__data.__lock == 1)
+	{
+		if (!check_death(buddy))
+			return ;
+	}
+	pthread_mutex_lock(&buddy->right_buddy->fork);
+	print_take_fork(buddy);
+	while (buddy->fork.__data.__lock == 1)
+	{
+		if (!check_death(buddy))
+			return ((void)pthread_mutex_unlock(&buddy->right_buddy->fork));
+	}
+	pthread_mutex_lock(&buddy->fork);
+	print_take_fork(buddy);
+}
+
 static void	choose_fork(t_philo *buddy)
 {
-	int	i;
 	if (buddy->id < buddy->right_buddy->id)
-	{
-		while (buddy->right_buddy->fork.__data.__lock == 1)
-			i = check_death(buddy);
-		if (!i)
-			return ;
-		pthread_mutex_lock(&buddy->right_buddy->fork);
-		print_take_fork(buddy);
-		while (buddy->fork.__data.__lock == 1)
-			i = check_death(buddy);
-		if (!i)
-			return ((void)pthread_mutex_unlock(&buddy->right_buddy->fork));
-		pthread_mutex_lock(&buddy->fork);
-		print_take_fork(buddy);
-	}
+		return ((void)choose_higher(buddy));
 	else
 	{
 		while (buddy->fork.__data.__lock == 1)
-			i = check_death(buddy);
-		if (!i)
-			return ;
+		{
+			if (!check_death(buddy))
+				return ;
+		}
 		pthread_mutex_lock(&buddy->fork);
 		print_take_fork(buddy);
 		while (buddy->right_buddy->fork.__data.__lock == 1)
-			i = check_death(buddy);
-		if (!i)
-			return ((void)pthread_mutex_unlock(&buddy->fork));
+		{
+			if (!check_death(buddy))
+				return ((void)pthread_mutex_unlock(&buddy->fork));
+		}
 		pthread_mutex_lock(&buddy->right_buddy->fork);
 		print_take_fork(buddy);
 	}
