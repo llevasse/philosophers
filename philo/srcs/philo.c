@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 16:47:39 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:59:33 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_philo	**init_philo(int max_id, char **argv, t_table *table)
 	i = 0;
 	philo = malloc(sizeof(struct s_philo *) * (max_id + 1));
 	if (!philo)
-		return (NULL);
+		return (write_mem_err(), NULL);
 	while (i < max_id)
 	{
 		philo[i] = set_philo(argv, table, i);
@@ -71,8 +71,7 @@ t_philo	**init_philo(int max_id, char **argv, t_table *table)
 			pthread_mutex_destroy(&philo[i]->fork);
 			free(philo[i--]);
 		}
-		free(philo);
-		return (NULL);
+		return (free(philo), NULL);
 	}
 	return (philo);
 }
@@ -83,7 +82,7 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 
 	philo = malloc(sizeof(struct s_philo));
 	if (!philo)
-		return (NULL);
+		return (write_mem_err(), NULL);
 	philo->is_alive = 1;
 	philo->id = buddy_id;
 	philo->time_to_die = ft_atoi(argv[2]);
@@ -91,7 +90,7 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->eaten_times = 0;
 	if (pthread_mutex_init(&philo->fork, NULL))
-		return (free(philo), NULL);
+		return (write_mut_err(), free(philo), NULL);
 	philo->table = table;
 	return (philo);
 }

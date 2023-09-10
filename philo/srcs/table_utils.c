@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 16:44:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:58:29 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_table	*init_table(char **argv)
 	i = 0;
 	table = malloc(sizeof(struct s_table));
 	if (!table)
-		return (NULL);
+		return (write_mem_err(), NULL);
 	set_table_null(table);
 	table->nb_philo = ft_atoi(argv[1]);
 	table->philo = init_philo(table->nb_philo, argv, table);
@@ -29,7 +29,7 @@ t_table	*init_table(char **argv)
 	table->philo[table->nb_philo] = 0;
 	table->threads = malloc(sizeof(pthread_t) * (table->nb_philo + 1));
 	if (!table->threads)
-		return (free_table(table), NULL);
+		return (write_mem_err(), free_table(table), NULL);
 	while (i < table->nb_philo)
 		set_neighboor(table, i++);
 	return (table);

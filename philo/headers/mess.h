@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 20:56:06 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:56:48 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 # define BAD_TIME_SLEEP_L 27
 # define BAD_NB_EAT "Numbers of time a philosophers must eat is not valid\n"
 # define BAD_NB_EAT_L 53
+# define MEM_ERR "Memory initialization error\n"
+# define MEM_ERR_L 28 
+# define MUT_ERR "Mutex initialization error\n"
+# define MUT_ERR_L 27 
+
+void				write_mem_err(void);
+void				write_mut_err(void);
 
 void				print_take_fork(t_philo *buddy, long long time);
 void				print_eat(t_philo *buddy, long long time);
