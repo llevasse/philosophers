@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 16:27:44 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:38:53 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "philosophers.h"
 
 typedef struct s_philo {
+	struct timeval	curr_time;
 	int				is_alive;
 	int				id;
 	int				time_to_die;
