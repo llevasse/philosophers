@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 10:50:41 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 00:11:07 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 int	check_death(t_philo *buddy, long long time)
 {
-	if (buddy->table->alive.__data.__lock == 1)
+	pthread_mutex_lock(&buddy->table->read);
+	if (buddy->table->alive == 0)
+	{
+		pthread_mutex_unlock(&buddy->table->read);
 		return (0);
+	}
+	pthread_mutex_unlock(&buddy->table->read);
 	time = timestamp() - buddy->time_since_eat;
 	if (time > buddy->time_to_die)
 		return ((void)print_died(buddy, time), 0);
@@ -51,7 +56,7 @@ void	*alive_routine(void	*args)
 
 	buddy = (t_philo *)args;
 	time = 0;
-	while (buddy->table->write.__data.__lock == 1)
+	while (buddy->table->read.__data.__lock == 1)
 		;
 	if (buddy->id % 2 != 0)
 		usleep(1000 * buddy->table->nb_philo);
