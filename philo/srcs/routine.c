@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 00:11:07 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:36:02 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,8 @@
 
 int	check_death(t_philo *buddy, long long time)
 {
-	pthread_mutex_lock(&buddy->table->read);
-	if (buddy->table->alive == 0)
-	{
-		pthread_mutex_unlock(&buddy->table->read);
+	if (buddy->table->alive.__data.__lock == 1)
 		return (0);
-	}
-	pthread_mutex_unlock(&buddy->table->read);
 	time = timestamp() - buddy->time_since_eat;
 	if (time > buddy->time_to_die)
 		return ((void)print_died(buddy, time), 0);

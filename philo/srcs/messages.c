@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 23:18:51 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:42:14 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	print_died(t_philo *buddy, long long time)
 {
 	pthread_mutex_lock(&buddy->table->read);
 	buddy->is_alive = 0;
-	buddy->table->alive = 0;
+	if (buddy->table->alive.__data.__lock == 0)
+		pthread_mutex_lock(&buddy->table->alive);
 	pthread_mutex_unlock(&buddy->table->read);
 	pthread_mutex_lock(&buddy->table->write);
 	time = timestamp() - buddy->table->init_time;

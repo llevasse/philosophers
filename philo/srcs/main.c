@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:58:11 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 11:25:22 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:38:23 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	main(int argc, char **argv)
 	pthread_mutex_init(&table->read, NULL);
 	create_threads(table);
 	free_table(table);
+	if (table->alive.__data.__lock == 1)
+		pthread_mutex_unlock(&table->alive);
 	pthread_mutex_destroy(&table->write);
+	pthread_mutex_destroy(&table->alive);
 	pthread_mutex_destroy(&table->read);
 	return (0);
 }

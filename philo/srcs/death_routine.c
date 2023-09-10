@@ -6,34 +6,11 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 11:47:04 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:41:40 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-//static int	check_death(t_table *table)
-//{
-//	int	i;
-//
-//	i = 0;
-//	while (i < table->nb_philo)
-//	{
-//		if (table->philo[i]->is_alive == 0)
-//			return (1);
-//		i++;
-//	}
-//	return (0);
-//}
-
-void	detach_threads(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->nb_philo)
-		pthread_detach(table->threads[i++]);
-}
 
 int	check_eat_times(t_table *table)
 {
@@ -64,15 +41,13 @@ void	*death_routine(void	*args)
 	table = (t_table *)args;
 	while (1)
 	{
-		pthread_mutex_lock(&table->read);
-		if (table->alive == 1)
-			table->alive = check_eat_times(table);
-		if (table->alive == 0)
+		if (table->alive.__data.__lock == 0)
 		{
-			pthread_mutex_unlock(&table->read);
-			break ;
+			if (check_eat_times(table) == 0 && table->alive.__data.__lock == 0)
+				pthread_mutex_lock(&table->alive);
 		}
-		pthread_mutex_unlock(&table->read);
+		if (table->alive.__data.__lock == 1)
+			break ;
 	}
 	pthread_exit(NULL);
 	return (NULL);
