@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 19:59:15 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:04:26 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	print_died(t_philo *buddy, long long time)
 		pthread_mutex_lock(&buddy->table->write);
 	time = timestamp(buddy->curr_time) - buddy->table->init_time;
 	printf("%lld %d\033[0;31m died\033[0m\n", time, buddy->id + 1);
-	pthread_mutex_unlock(&buddy->table->write);
+	if (buddy->table->write.__data.__lock == 1)
+		pthread_mutex_unlock(&buddy->table->write);
 }
