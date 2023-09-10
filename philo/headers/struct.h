@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/09 20:39:38 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 12:42:13 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_philo {
 }	t_philo;
 
 typedef struct s_table {
+	struct timeval	curr_time;
 	long long		init_time;
 	int				alive;
 	int				nb_philo;
