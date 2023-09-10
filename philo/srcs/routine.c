@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 22:24:14 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:54:28 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	*alive_routine(void	*args)
 	while (buddy->table->read.__data.__lock == 1)
 		usleep(10);
 	time = buddy->table->init_time;
+	buddy->time_since_eat = time;
 	while (time > timestamp(buddy->curr_time))
 		usleep(10);
-	buddy->time_since_eat = timestamp(buddy->curr_time);
 	if (buddy->id % 2 != 0)
 		ft_sleep(buddy, time);
 	while (check_death(buddy, time))
