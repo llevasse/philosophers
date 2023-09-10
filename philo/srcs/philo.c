@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 16:44:46 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:47:39 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_philo	**init_philo(int max_id, char **argv, t_table *table)
 			free(philo[i--]);
 		}
 		free(philo);
-		philo = 0;
 		return (NULL);
 	}
 	return (philo);
