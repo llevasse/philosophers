@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 23:00:17 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:09:00 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	check_eat_times(t_table *table)
 			break ;
 		i++;
 	}
+	pthread_mutex_unlock(&table->read);
 	if (i == table->nb_philo)
 		i = 0;
 	else
 		i = 1;
-	pthread_mutex_unlock(&table->read);
 	return (i);
 }
 
