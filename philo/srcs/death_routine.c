@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 21:44:01 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:00:17 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_eat_times(t_table *table)
 	i = 0;
 	if (table->nb_rounds == -1)
 		return (1);
-	pthread_mutex_lock(&table->write);
+	pthread_mutex_lock(&table->read);
 	while (i < table->nb_philo)
 	{
 		if (table->philo[i]->eaten_times < table->nb_rounds)
@@ -39,7 +39,7 @@ int	check_eat_times(t_table *table)
 		i = 0;
 	else
 		i = 1;
-	pthread_mutex_unlock(&table->write);
+	pthread_mutex_unlock(&table->read);
 	return (i);
 }
 
