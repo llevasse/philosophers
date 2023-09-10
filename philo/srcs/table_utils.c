@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 10:42:50 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:48:41 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_table	*init_table(char **argv)
 void	set_table_null(t_table *table)
 {
 	table->philo = NULL;
-	pthread_mutex_init(&table->alive, NULL);
 	table->threads = NULL;
 }
 

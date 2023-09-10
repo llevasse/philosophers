@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:58:11 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 10:38:23 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:48:54 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int	main(int argc, char **argv)
 		table->nb_rounds = ft_atoi(argv[5]);
 	pthread_mutex_init(&table->write, NULL);
 	pthread_mutex_init(&table->read, NULL);
+	pthread_mutex_init(&table->alive, NULL);
 	create_threads(table);
-	free_table(table);
 	if (table->alive.__data.__lock == 1)
 		pthread_mutex_unlock(&table->alive);
 	pthread_mutex_destroy(&table->write);
 	pthread_mutex_destroy(&table->alive);
 	pthread_mutex_destroy(&table->read);
+	free_table(table);
 	return (0);
 }

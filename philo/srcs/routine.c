@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 10:36:02 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 10:50:41 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*alive_routine(void	*args)
 
 	buddy = (t_philo *)args;
 	time = 0;
-	while (buddy->table->read.__data.__lock == 1)
+	while (buddy->table->write.__data.__lock == 1)
 		;
 	if (buddy->id % 2 != 0)
 		usleep(1000 * buddy->table->nb_philo);
