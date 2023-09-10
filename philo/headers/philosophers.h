@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 12:45:33 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:40:21 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void				create_threads(t_table *table);
 void				free_table(t_table *table);
 t_table				*init_table(char **argv);
 void				set_table_null(t_table *table);
-t_philo				**init_philo(int max_id);
-void				set_philo(char **argv, t_table *table, int buddy_id);
+t_philo				**init_philo(int max_id, char **argv, t_table *table);
+t_philo				*set_philo(char **argv, t_table *table, int buddy_id);
+void				set_neighboor(t_table *table, int buddy_id);
 void				print_philo(t_philo *philo);
 
 long long			timestamp(struct timeval tv);

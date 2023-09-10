@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 12:43:17 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:44:46 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,6 @@ int	add_philo_thread(t_table *table)
 	{
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	add_even(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->nb_philo)
-	{
-		if (i % 2 != 0 && pthread_create(&table->threads[i], 
-				NULL, &alive_routine, table->philo[i]))
 			return (0);
 		i++;
 	}
@@ -63,7 +48,7 @@ void	create_threads(t_table *table)
 		return ;
 }
 
-t_philo	**init_philo(int max_id)
+t_philo	**init_philo(int max_id, char **argv, t_table *table)
 {
 	t_philo	**philo;
 	int		i;
@@ -74,16 +59,18 @@ t_philo	**init_philo(int max_id)
 		return (NULL);
 	while (i < max_id)
 	{
-		philo[i] = malloc(sizeof(struct s_philo));
+		philo[i] = set_philo(argv, table, i);
 		if (!philo[i++])
 			break ;
-		philo[i - 1]->succes = 0;
 		philo[i] = NULL;
 	}
 	if (i-- < max_id)
 	{
 		while (i >= 0)
+		{
+			pthread_mutex_destroy(&philo[i]->fork);
 			free(philo[i--]);
+		}
 		free(philo);
 		philo = 0;
 		return (NULL);
@@ -91,27 +78,36 @@ t_philo	**init_philo(int max_id)
 	return (philo);
 }
 
-void	set_philo(char **argv, t_table *table, int buddy_id)
+t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 {
-	int		succes;
-	int		right_id;
-	int		left_id;
+	t_philo	*philo;
+
+	philo = malloc(sizeof(struct s_philo));
+	if (!philo)
+		return (NULL);
+	philo->is_alive = 1;
+	philo->id = buddy_id;
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
+	philo->eaten_times = 0;
+	if (pthread_mutex_init(&philo->fork, NULL))
+		return (free(philo), NULL);
+	philo->table = table;
+	return (philo);
+}
+
+void	set_neighboor(t_table *table, int buddy_id)
+{
+	int	right_id;
+	int	left_id;
 
 	left_id = buddy_id - 1;
 	right_id = buddy_id + 1;
 	if (buddy_id == 0)
-		left_id = ft_atoi(argv[1]) - 1;
-	if (buddy_id == ft_atoi(argv[1]) - 1)
+		left_id = table->nb_philo - 1;
+	if (buddy_id == table->nb_philo - 1)
 		right_id = 0;
-	table->philo[buddy_id]->is_alive = 1;
-	table->philo[buddy_id]->id = buddy_id;
-	table->philo[buddy_id]->time_to_die = ft_atoi(argv[2]);
-	table->philo[buddy_id]->time_to_eat = ft_atoi(argv[3]);
-	table->philo[buddy_id]->time_to_sleep = ft_atoi(argv[4]);
-	table->philo[buddy_id]->eaten_times = 0;
 	table->philo[buddy_id]->left_buddy = table->philo[left_id];
 	table->philo[buddy_id]->right_buddy = table->philo[right_id];
-	succes = pthread_mutex_init(&table->philo[buddy_id]->fork, NULL);
-	table->philo[buddy_id]->succes = succes;
-	table->philo[buddy_id]->table = table;
 }

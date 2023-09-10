@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 11:25:58 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:44:26 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_table	*init_table(char **argv)
 		return (NULL);
 	set_table_null(table);
 	table->nb_philo = ft_atoi(argv[1]);
-	table->philo = init_philo(table->nb_philo);
+	table->philo = init_philo(table->nb_philo, argv, table);
 	if (!table->philo)
 		return (free_table(table), NULL);
 	table->philo[table->nb_philo] = 0;
@@ -31,11 +31,7 @@ t_table	*init_table(char **argv)
 	if (!table->threads)
 		return (free_table(table), NULL);
 	while (i < table->nb_philo)
-	{
-		set_philo(argv, table, i);
-		if (table->philo[i++]->succes != 0)
-			return (free_table(table), NULL);
-	}
+		set_neighboor(table, i++);
 	return (table);
 }
 
@@ -55,13 +51,9 @@ void	free_table(t_table *table)
 		i = 0;
 		while (table->philo[i])
 		{
-			if (table->philo[i]->succes == 0)
-			{
-				while (table->philo[i]->fork.__data.__lock == 1)
-					;
-				pthread_mutex_destroy(&table->philo[i]->fork);
-				table->philo[i]->succes = 1;
-			}
+			while (table->philo[i]->fork.__data.__lock == 1)
+				;
+			pthread_mutex_destroy(&table->philo[i]->fork);
 			free(table->philo[i++]);
 		}
 		free(table->philo);

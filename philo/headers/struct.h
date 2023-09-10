@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 12:42:13 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:27:44 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_philo {
 	long long		time_since_eat;
 	int				time_to_sleep;
 	int				eaten_times;
-	int				succes;
 	pthread_mutex_t	fork;
 	struct s_philo	*left_buddy;
 	struct s_philo	*right_buddy;
