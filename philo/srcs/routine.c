@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/11 23:24:25 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/11 23:49:24 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	*alive_routine(void	*args)
 	while (time > timestamp(buddy->curr_time))
 		usleep(10);
 	if (buddy->id % 2 == 0)
-		usleep(1000/* * (buddy->table->nb_philo / 2)*/);
-//		ft_sleep(buddy, time);
+		usleep(1000);
 	while (check_death(buddy, time))
 	{
 		print_think(buddy, time);
