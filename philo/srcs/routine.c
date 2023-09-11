@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 23:29:04 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/11 23:24:25 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*alive_routine(void	*args)
 	long long	time;
 
 	buddy = (t_philo *)args;
-	while (buddy->table->read.__data.__lock == 1)
+	while (buddy->table->write.__data.__lock == 1)
 		usleep(10);
 	time = buddy->table->init_time;
 	buddy->time_since_eat = time;
