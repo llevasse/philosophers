@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/11 23:45:38 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 10:59:28 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	*death_routine(void	*args)
 	t_table	*table;
 
 	table = (t_table *)args;
-	while (table->write.__data.__lock == 1)
-		usleep(1000);
 	while (1)
 	{
 		pthread_mutex_lock(&table->read);
