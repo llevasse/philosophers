@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 21:34:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/12 11:43:10 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 23:10:56 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ static int	choose_higher(t_philo *buddy, long long time)
 		if (!check_death(buddy, time))
 			return (0);
 	}
-	print_take_fork(buddy, &buddy->right_buddy->fork, time);
+	pthread_mutex_lock(&buddy->right_buddy->fork);
+	print_messages(buddy, time, "has taken a fork");
 	while (buddy->fork.__data.__lock == 1)
 	{
 		usleep(10);
 		if (!check_death(buddy, time))
 			return ((void)pthread_mutex_unlock(&buddy->right_buddy->fork), 0);
 	}
-	print_take_fork(buddy, &buddy->fork, time);
+	pthread_mutex_lock(&buddy->fork);
+	print_messages(buddy, time, "has taken a fork");
 	return (1);
 }
 
@@ -41,13 +43,15 @@ int	choose_fork(t_philo *buddy, long long time)
 		if (!check_death(buddy, time))
 			return (0);
 	}
-	print_take_fork(buddy, &buddy->fork, time);
+	pthread_mutex_lock(&buddy->fork);
+	print_messages(buddy, time, "has taken a fork");
 	while (buddy->right_buddy->fork.__data.__lock == 1)
 	{
 		usleep(10);
 		if (!check_death(buddy, time))
 			return ((void)pthread_mutex_unlock(&buddy->fork), 0);
 	}
-	print_take_fork(buddy, &buddy->right_buddy->fork, time);
+	pthread_mutex_lock(&buddy->right_buddy->fork);
+	print_messages(buddy, time, "has taken a fork");
 	return (1);
 }

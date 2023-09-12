@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/12 20:59:24 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 23:13:20 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int	ft_eat(t_philo *buddy, long long time)
 {
 	if (choose_fork(buddy, time))
 	{
-		print_eat(buddy, time);
+		print_messages(buddy, time, "\033[0;32m is eating\033[0m");
 		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
+		pthread_mutex_lock(&buddy->table->read);
+		buddy->eaten_times++;
+		pthread_mutex_unlock(&buddy->table->read);
 		buddy->time_since_eat = timestamp(buddy->curr_time);
 		pthread_mutex_unlock(&buddy->fork);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
@@ -43,7 +46,7 @@ int	ft_eat(t_philo *buddy, long long time)
 int	ft_sleep(t_philo *buddy, long long time)
 {
 	time = timestamp(buddy->curr_time) + buddy->time_to_sleep;
-	print_sleep(buddy, time);
+	print_messages(buddy, time, "\033[0;33m is sleeping\033[0m");
 	wait_time(buddy, time, time);
 	return (check_death(buddy, time));
 }
@@ -57,9 +60,9 @@ void	*alive_routine(void	*args)
 	while (buddy->table->write.__data.__lock == 1)
 		usleep(10);
 	time = buddy->table->init_time;
-	buddy->time_since_eat = time;
 	while (time > timestamp(buddy->curr_time))
 		usleep(10);
+	buddy->time_since_eat = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
 		usleep(1000);
 	while (check_death(buddy, time))
@@ -68,7 +71,7 @@ void	*alive_routine(void	*args)
 			break ;
 		if (!ft_sleep(buddy, time))
 			break ;
-		print_think(buddy, time);
+		print_messages(buddy, time, "is thinking");
 	}
 	pthread_exit(NULL);
 }

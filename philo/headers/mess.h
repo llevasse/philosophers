@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/12 11:41:43 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 23:07:34 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void				print_eat(t_philo *buddy, long long time);
 void				print_sleep(t_philo *buddy, long long time);
 void				print_think(t_philo *buddy, long long time);
 void				print_died(t_philo *buddy, long long time);
+void				print_messages(t_philo *buddy, long long time, char *mess);
 
 #endif
