@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/12 20:34:28 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:57:15 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	add_philo_thread(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		printf("0 %d is thinking\n", i + 1);
+//		printf("0 %d is thinking\n", i + 1);
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return (0);
@@ -32,7 +32,7 @@ void	create_threads(t_table *table)
 {
 	int	i;
 
-	table->init_time = timestamp(table->curr_time) + (table->nb_philo * 2);
+	table->init_time = timestamp(table->curr_time) + table->nb_philo;
 	pthread_mutex_lock(&table->write);
 	add_philo_thread(table);
 	pthread_mutex_unlock(&table->write);
