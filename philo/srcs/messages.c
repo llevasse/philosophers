@@ -6,14 +6,15 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/12 11:17:44 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 11:42:13 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_take_fork(t_philo *buddy, long long time)
+void	print_take_fork(t_philo *buddy, pthread_mutex_t *fork, long long time)
 {
+	pthread_mutex_lock(fork);
 	time = timestamp(buddy->curr_time) - buddy->table->init_time;
 	if (time >= 999999)
 		time = 999999;
