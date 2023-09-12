@@ -34,7 +34,7 @@ $(NAME):			$(OBJS_DIR) Makefile $(HEADER_FILE) $(OBJS)
 					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) $(OBJS) -lpthread -lrt -o $@
 					@echo "\33[2K\r$(GREEN)Philosophers compiled :D$(NC)"
 					
-$(OBJS_DIR)%.o:	%.c $(HEADER_FILE)
+$(OBJS_DIR)%.o:	%.c $(HEADER_FILE) Makefile
 					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) -c $< -o $@
 					@echo -n "\33[2K\r$(YELLOW)Compiled $<"
 
