@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/11 23:47:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/12 11:13:10 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	print_take_fork(t_philo *buddy, long long time)
 {
-	pthread_mutex_lock(&buddy->table->write);
 	time = timestamp(buddy->curr_time) - buddy->table->init_time;
 	if (time >= 999999)
 		time = 999999;
+	pthread_mutex_lock(&buddy->table->write);
 	if (!check_death(buddy, time))
 		return ;
 	printf("%lld %d has taken a fork\n", time, buddy->id + 1);
