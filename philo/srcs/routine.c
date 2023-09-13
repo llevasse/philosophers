@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 11:17:10 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:13:36 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	ft_eat(t_philo *buddy, long long time, int nb_fork)
 {
 	if (choose_fork(buddy, time, nb_fork))
 	{
+		buddy->time_since_eat = timestamp(buddy->curr_time);
 		print_messages(buddy, time, "\033[0;32mis eating\033[0m");
 		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
 		pthread_mutex_lock(&buddy->table->read);
 		buddy->eaten_times++;
 		pthread_mutex_unlock(&buddy->table->read);
-		buddy->time_since_eat = timestamp(buddy->curr_time);
 		pthread_mutex_unlock(&buddy->fork);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
 	}
