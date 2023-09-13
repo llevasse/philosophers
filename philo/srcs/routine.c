@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 16:15:11 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 21:09:08 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 int	check_death(t_philo *buddy, long long time)
 {
+	int	alive;
+
 	time = timestamp(buddy->curr_time) - buddy->time_since_eat;
+	alive = 1;
 	pthread_mutex_lock(&buddy->table->read);
 	if (buddy->table->alive == 0)
+		alive = 0;
+	if (time > buddy->time_to_die)
 	{
-		pthread_mutex_unlock(&buddy->table->read);
-		return (0);
+		alive = 0;
+		print_died(buddy, time);
 	}
 	pthread_mutex_unlock(&buddy->table->read);
-	if (time > buddy->time_to_die)
-		return ((void)print_died(buddy, time), 0);
-	return (1);
+	return (alive);
 }
 
 int	ft_eat(t_philo *buddy, long long time)
