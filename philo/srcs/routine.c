@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 15:31:46 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 16:00:36 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*alive_routine(void	*args)
 	buddy->time_since_eat = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
 		usleep(1000);
-	else
+/*	else
 	{
 		if (buddy->id < buddy->right_buddy->id)
 		{		
@@ -79,7 +79,7 @@ void	*alive_routine(void	*args)
 			print_messages(buddy, time, "has taken a fork");
 		}
 		nb_fork = 1;
-	}
+	}*/
 	while (check_death(buddy, time))
 	{
 		if (!ft_eat(buddy, time, nb_fork))
