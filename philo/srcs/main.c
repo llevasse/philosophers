@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:58:11 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 15:30:50 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:37:30 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ int	main(int argc, char **argv)
 		while (table->philo[i])
 			table->philo[i++]->eaten_times = ft_atoi(argv[5]);
 	}
-	if (pthread_mutex_init(&table->write, NULL))
-		return (write_mut_err(), free_table(table), 12);
-	if (pthread_mutex_init(&table->read, NULL))
-		return (write_mut_err(), free_table(table), 12);
 	create_threads(table);
 	free_table(table);
 	pthread_mutex_destroy(&table->write);

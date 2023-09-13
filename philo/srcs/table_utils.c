@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 16:58:29 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:37:51 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ t_table	*init_table(char **argv)
 		return (write_mem_err(), NULL);
 	set_table_null(table);
 	table->nb_philo = ft_atoi(argv[1]);
+	if (pthread_mutex_init(&table->write, NULL))
+		return (write_mut_err(), free_table(table), NULL);
+	if (pthread_mutex_init(&table->read, NULL))
+		return (write_mut_err(), free_table(table), NULL);
 	table->philo = init_philo(table->nb_philo, argv, table);
 	if (!table->philo)
 		return (free_table(table), NULL);
