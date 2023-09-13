@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 15:13:36 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:31:46 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ int	ft_eat(t_philo *buddy, long long time, int nb_fork)
 		buddy->time_since_eat = timestamp(buddy->curr_time);
 		print_messages(buddy, time, "\033[0;32mis eating\033[0m");
 		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
-		pthread_mutex_lock(&buddy->table->read);
-		buddy->eaten_times++;
-		pthread_mutex_unlock(&buddy->table->read);
 		pthread_mutex_unlock(&buddy->fork);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
+		if (buddy->eaten_times != -1)
+			buddy->eaten_times--;
 	}
 	return (check_death(buddy, time));
 }
@@ -84,6 +83,8 @@ void	*alive_routine(void	*args)
 	while (check_death(buddy, time))
 	{
 		if (!ft_eat(buddy, time, nb_fork))
+			break ;
+		if (buddy->eaten_times == 0)
 			break ;
 		if (!ft_sleep(buddy, time))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 11:26:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:28:22 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ void	create_threads(t_table *table)
 	add_philo_thread(table);
 	pthread_mutex_unlock(&table->write);
 	i = 0;
-	if (pthread_create(&table->death, NULL, &death_routine, table))
-		return ;
+	//if (pthread_create(&table->death, NULL, &death_routine, table))
+	//	return ;
 	while (i < table->nb_philo)
 	{
 		if (pthread_join(table->threads[i], NULL))
 			return ;
 		i++;
 	}
-	if (pthread_join(table->death, NULL))
-		return ;
+	//if (pthread_join(table->death, NULL))
+	//	return ;
 }
 
 t_philo	**init_philo(int max_id, char **argv, t_table *table)
@@ -88,7 +88,7 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
-	philo->eaten_times = 0;
+	philo->eaten_times = -1;
 	if (pthread_mutex_init(&philo->fork, NULL))
 		return (write_mut_err(), free(philo), NULL);
 	philo->table = table;
