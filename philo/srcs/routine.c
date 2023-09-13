@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 11:12:42 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 11:17:10 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	check_death(t_philo *buddy, long long time)
 	return (1);
 }
 
-int	ft_eat(t_philo *buddy, long long time)
+int	ft_eat(t_philo *buddy, long long time, int nb_fork)
 {
-	if (choose_fork(buddy, time))
+	if (choose_fork(buddy, time, nb_fork))
 	{
 		print_messages(buddy, time, "\033[0;32mis eating\033[0m");
 		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
@@ -55,8 +55,10 @@ void	*alive_routine(void	*args)
 {
 	t_philo		*buddy;
 	long long	time;
+	int			nb_fork;
 
 	buddy = (t_philo *)args;
+	nb_fork = 0;
 	while (buddy->table->write.__data.__lock == 1)
 		usleep(10);
 	time = buddy->table->init_time;
@@ -65,13 +67,28 @@ void	*alive_routine(void	*args)
 	buddy->time_since_eat = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
 		usleep(1000);
+	else
+	{
+		if (buddy->id < buddy->right_buddy->id)
+		{		
+			pthread_mutex_lock(&buddy->right_buddy->fork);
+			print_messages(buddy, time, "has taken a fork");
+		}
+		else
+		{		
+			pthread_mutex_lock(&buddy->fork);
+			print_messages(buddy, time, "has taken a fork");
+		}
+		nb_fork = 1;
+	}
 	while (check_death(buddy, time))
 	{
-		if (!ft_eat(buddy, time))
+		if (!ft_eat(buddy, time, nb_fork))
 			break ;
 		if (!ft_sleep(buddy, time))
 			break ;
 		print_messages(buddy, time, "is thinking");
+		nb_fork = 0;
 	}
 	pthread_exit(NULL);
 }
