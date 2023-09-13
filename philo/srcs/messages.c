@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 11:24:25 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:40:03 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_messages(t_philo *buddy, long long time, char *mess)
 	//	usleep(100);
 	pthread_mutex_lock(&buddy->table->write);
 	if (!check_death(buddy, time))
-		return ;
+		return ((void)pthread_mutex_unlock(&buddy->table->write));
 	time = timestamp(buddy->curr_time) - buddy->table->init_time;
 	if (time >= 999999)
 		time = 999999;
