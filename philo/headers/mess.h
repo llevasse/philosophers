@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 09:59:32 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:11:39 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void				write_mut_err(void);
 
 void				print_died(t_philo *buddy, long long time, int from_print);
 void				print_messages(t_philo *buddy, long long time, char *mess);
+void				print_fork(t_philo *buddy, long long time, char *mess, int id);
 
 #endif
