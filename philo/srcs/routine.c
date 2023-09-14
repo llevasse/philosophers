@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 10:27:37 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:32:08 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int	check_death(t_philo *buddy, long long time, int from_mess)
 	pthread_mutex_lock(&buddy->table->read);
 	if (buddy->table->alive == 0)
 	{
-		if (from_mess)
-			pthread_mutex_unlock(&buddy->table->write);
 		pthread_mutex_unlock(&buddy->table->read);
-		pthread_exit(NULL);
+		return (0);
 	}
 	if (time > buddy->time_to_die)
 	{
@@ -76,10 +74,13 @@ void	*alive_routine(void	*args)
 		ft_sleep(buddy, time);
 	while (1)
 	{
-		ft_eat(buddy, time);
+		
+		if (!ft_eat(buddy, time))
+			break ;
 		if (buddy->eaten_times == 0)
 			break ;
-		ft_sleep(buddy, time);
+		if (!ft_sleep(buddy, time))
+			break ;
 		print_messages(buddy, time, "is thinking");
 	}
 	pthread_exit(NULL);

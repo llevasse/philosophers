@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 10:20:37 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:30:47 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	print_died(t_philo *buddy, long long time, int from_print)
 	printf("%lld %d\033[0;31m died\033[0m\n", time, buddy->id + 1);
 	if (!from_print)
 		pthread_mutex_unlock(&buddy->table->write);
-	pthread_exit(NULL);
+//	pthread_exit(NULL);
 }
