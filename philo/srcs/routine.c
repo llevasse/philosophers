@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 17:47:57 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:59:15 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	ft_eat(t_philo *buddy, long long time)
 		if (buddy->eaten_times != -1)
 			buddy->eaten_times--;
 	}
-	return (1);
 	return (check_death(buddy, time, 0));
 }
 
@@ -56,7 +55,6 @@ int	ft_sleep(t_philo *buddy, long long time)
 	print_messages(buddy, time, "\033[0;33mis sleeping\033[0m");
 	time = timestamp(buddy->curr_time) + buddy->time_to_sleep;
 	wait_time(buddy, time, time);
-	return (1);
 	return (check_death(buddy, time, 0));
 }
 
@@ -69,15 +67,12 @@ void	*alive_routine(void	*args)
 	while (buddy->table->write.__data.__lock == 1)
 		usleep(10);
 	time = buddy->table->init_time;
-	buddy->time_since_eat = timestamp(buddy->curr_time);
-	buddy->init_time = timestamp(buddy->curr_time);
 	while (time > timestamp(buddy->curr_time))
 		usleep(10);
 	buddy->time_since_eat = timestamp(buddy->curr_time);
 	buddy->init_time = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
-		usleep(1000);
-	//	ft_sleep(buddy, time);
+		usleep(10000);
 	while (1)
 	{
 		
