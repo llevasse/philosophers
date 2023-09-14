@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 21:48:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 22:52:47 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	add_philo_thread(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		if (i % 2 == 0)
+		if (table->philo[i]->id % 2 == 0)
 		{
 			ft_putstr_fd("0 ", table->philo[i]->fd);
-			ft_putnbr_fd(i + 1, table->philo[i]->fd);
-			ft_putstr_fd("\033[0;33mis sleeping\033[0m\n", table->philo[i]->fd);
+			ft_putnbr_fd(table->philo[i]->id, table->philo[i]->fd);
+			ft_putstr_fd(" \033[0;33mis waiting\033[0m\n", table->philo[i]->fd);
 		}
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
@@ -85,7 +85,7 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 	philo = malloc(sizeof(struct s_philo));
 	if (!philo)
 		return (write_mem_err(), NULL);
-	philo->id = buddy_id;
+	philo->id = buddy_id + 1;
 	philo->fd = 1;
 	if (DEBUG)
 		philo->fd = open(ft_itoa(buddy_id + 1), O_RDWR | O_TRUNC | O_CREAT, 0666);

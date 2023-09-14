@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 22:28:38 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 22:56:45 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	ft_eat(t_philo *buddy, long long time)
 		if (buddy->eaten_times != -1)
 			buddy->eaten_times--;
 	}
+	else
+		return (0);
 	return (check_death(buddy, time, 0));
 }
 
