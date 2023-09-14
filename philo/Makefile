@@ -1,6 +1,6 @@
 NAME			=	philo
 CC				=	cc
-FLAGS			=	-Wall -Werror -Wextra #-fsanitize=thread
+FLAGS			=	-Wall -Werror -Wextra -D DEBUG=1 #-fsanitize=thread
 RM				=	rm -rf
 RED				=	\033[0;31m
 GREEN			=	\033[0;32m
@@ -21,7 +21,8 @@ SRC				=	srcs/main.c \
 					srcs/ft_putstr_fd.c \
 					srcs/ft_putchar_fd.c \
 					srcs/ft_putnbr_fd.c \
-					srcs/ft_atoi.c
+					srcs/ft_atoi.c \
+					srcs/ft_itoa.c
 
 OBJS_DIR		=	.OBJS/
 OBJS			=	$(addprefix $(OBJS_DIR), $(SRC:.c=.o))
