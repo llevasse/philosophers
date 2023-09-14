@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 22:56:45 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:12:08 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	ft_eat(t_philo *buddy, long long time)
 		print_messages(buddy, time, "\033[0;32mis eating\033[0m");
 		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
-		print_fork(buddy, time, "has released a fork", buddy->right_buddy->id);
 		pthread_mutex_unlock(&buddy->fork);
-		print_fork(buddy, time, "has released a fork", buddy->id);
+	//	print_fork(buddy, time, "has released a fork", buddy->right_buddy->id);
+	//	print_fork(buddy, time, "has released a fork", buddy->id);
 		if (buddy->eaten_times != -1)
 			buddy->eaten_times--;
 	}
