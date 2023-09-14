@@ -6,13 +6,13 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 09:48:14 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:00:40 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	check_death(t_philo *buddy, long long time)
+int	check_death(t_philo *buddy, long long time, int from_mess)
 {
 	int	alive;
 
@@ -29,7 +29,7 @@ int	check_death(t_philo *buddy, long long time)
 	}
 	pthread_mutex_unlock(&buddy->table->read);
 	if (alive == -1)
-		print_died(buddy, time);
+		print_died(buddy, time, from_mess);
 	return (alive);
 }
 
@@ -45,7 +45,7 @@ int	ft_eat(t_philo *buddy, long long time)
 		if (buddy->eaten_times != -1)
 			buddy->eaten_times--;
 	}
-	return (check_death(buddy, time));
+	return (check_death(buddy, time, 0));
 }
 
 int	ft_sleep(t_philo *buddy, long long time)
@@ -53,7 +53,7 @@ int	ft_sleep(t_philo *buddy, long long time)
 	print_messages(buddy, time, "\033[0;33mis sleeping\033[0m");
 	time = timestamp(buddy->curr_time) + buddy->time_to_sleep;
 	wait_time(buddy, time, time);
-	return (check_death(buddy, time));
+	return (check_death(buddy, time, 0));
 }
 
 void	*alive_routine(void	*args)
@@ -70,7 +70,7 @@ void	*alive_routine(void	*args)
 	buddy->time_since_eat = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
 		ft_sleep(buddy, time);
-	while (check_death(buddy, time))
+	while (check_death(buddy, time, 0))
 	{
 		if (!ft_eat(buddy, time))
 			break ;

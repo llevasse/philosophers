@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/12 23:28:25 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 09:59:32 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@
 void				write_mem_err(void);
 void				write_mut_err(void);
 
-void				print_take_fork(t_philo *buddy, pthread_mutex_t *fork, long long time);
-void				print_eat(t_philo *buddy, long long time);
-void				print_sleep(t_philo *buddy, long long time);
-void				print_think(t_philo *buddy, long long time);
-void				print_died(t_philo *buddy, long long time);
+void				print_died(t_philo *buddy, long long time, int from_print);
 void				print_messages(t_philo *buddy, long long time, char *mess);
 
 #endif

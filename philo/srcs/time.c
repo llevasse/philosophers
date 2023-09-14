@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 11:02:56 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 20:09:11 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:00:45 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ long long	timestamp(struct timeval tv)
 void	wait_time(t_philo *buddy, long wait_time, long long time)
 {
 	while (timestamp(buddy->curr_time) < wait_time && \
-			check_death(buddy, time))
+			check_death(buddy, time, 0))
 		usleep(10);
 }

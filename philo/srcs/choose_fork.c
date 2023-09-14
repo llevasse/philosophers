@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 21:34:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 16:09:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:01:55 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	choose_higher(t_philo *buddy, long long time)
 	while (buddy->right_buddy->fork.__data.__lock == 1)
 	{
 		usleep(10);
-		if (!check_death(buddy, time))
+		if (!check_death(buddy, time, 0))
 			return (0);
 	}
 	pthread_mutex_lock(&buddy->right_buddy->fork);
@@ -25,7 +25,7 @@ static int	choose_higher(t_philo *buddy, long long time)
 	while (buddy->fork.__data.__lock == 1)
 	{
 		usleep(10);
-		if (!check_death(buddy, time))
+		if (!check_death(buddy, time, 0))
 			return ((void)pthread_mutex_unlock(&buddy->right_buddy->fork), 0);
 	}
 	pthread_mutex_lock(&buddy->fork);
@@ -40,7 +40,7 @@ int	choose_fork(t_philo *buddy, long long time)
 	while (buddy->fork.__data.__lock == 1)
 	{
 		usleep(10);
-		if (!check_death(buddy, time))
+		if (!check_death(buddy, time, 0))
 			return (0);
 	}
 	pthread_mutex_lock(&buddy->fork);
@@ -48,7 +48,7 @@ int	choose_fork(t_philo *buddy, long long time)
 	while (buddy->right_buddy->fork.__data.__lock == 1)
 	{
 		usleep(10);
-		if (!check_death(buddy, time))
+		if (!check_death(buddy, time, 0))
 			return ((void)pthread_mutex_unlock(&buddy->fork), 0);
 	}
 	pthread_mutex_lock(&buddy->right_buddy->fork);
