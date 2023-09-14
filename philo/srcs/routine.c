@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 15:43:24 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:26:41 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	check_death(t_philo *buddy, long long time, int from_mess)
 	return (alive);
 }
 
-int	ft_eat(t_philo *buddy, long long time, int nb_fork)
+int	ft_eat(t_philo *buddy, long long time)
 {
-	if (choose_fork(buddy, time, nb_fork))
+	if (choose_fork(buddy, time))
 	{
 		buddy->time_since_eat = timestamp(buddy->curr_time);
 		print_messages(buddy, time, "\033[0;32mis eating\033[0m");
@@ -64,29 +64,13 @@ void	*alive_routine(void	*args)
 {
 	t_philo		*buddy;
 	long long	time;
-	int			nb_fork;
 
-	nb_fork = 0;
 	buddy = (t_philo *)args;
 	while (buddy->table->write.__data.__lock == 1)
 		usleep(10);
 	time = buddy->table->init_time;
 	buddy->time_since_eat = timestamp(buddy->curr_time);
 	buddy->init_time = timestamp(buddy->curr_time);
-	if (buddy->id % 2 != 0)
-	{
-		if (buddy->id < buddy->right_buddy->id)
-		{		
-			pthread_mutex_lock(&buddy->right_buddy->fork);
-			print_fork(buddy, time, "has taken a fork", buddy->right_buddy->id);
-		}
-		else
-		{		
-			pthread_mutex_lock(&buddy->fork);
-			print_fork(buddy, time, "has taken a fork", buddy->id);
-		}
-		nb_fork = 1;
-	}	
 	while (time > timestamp(buddy->curr_time))
 		usleep(10);
 	buddy->time_since_eat = timestamp(buddy->curr_time);
@@ -96,7 +80,7 @@ void	*alive_routine(void	*args)
 	while (1)
 	{
 		
-		if (!ft_eat(buddy, time, nb_fork))
+		if (!ft_eat(buddy, time))
 			break ;
 		if (buddy->eaten_times == 0)
 			break ;
@@ -104,7 +88,6 @@ void	*alive_routine(void	*args)
 			break ;
 		if (!check_death(buddy, time, 0))
 			break ;
-		nb_fork = 0;
 		print_messages(buddy, time, "is thinking");
 	}
 	pthread_exit(NULL);
