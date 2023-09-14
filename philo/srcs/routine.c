@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 10:00:40 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:23:15 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,12 @@ void	*alive_routine(void	*args)
 	buddy->time_since_eat = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
 		ft_sleep(buddy, time);
-	while (check_death(buddy, time, 0))
+	while (1)
 	{
-		if (!ft_eat(buddy, time))
-			break ;
+		ft_eat(buddy, time);
 		if (buddy->eaten_times == 0)
 			break ;
-		if (!ft_sleep(buddy, time))
-			break ;
+		ft_sleep(buddy, time);
 		print_messages(buddy, time, "is thinking");
 	}
 	pthread_exit(NULL);
