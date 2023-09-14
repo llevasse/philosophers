@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/10 18:52:50 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:27:47 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 typedef struct s_philo {
 	struct timeval	curr_time;
 	long long		init_time;
-	int				is_alive;
 	int				id;
 	int				time_to_die;
 	int				time_to_eat;

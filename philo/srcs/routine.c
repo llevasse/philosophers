@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 10:23:15 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:27:37 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,19 @@ int	check_death(t_philo *buddy, long long time, int from_mess)
 	alive = 1;
 	pthread_mutex_lock(&buddy->table->read);
 	if (buddy->table->alive == 0)
-		alive = 0;
+	{
+		if (from_mess)
+			pthread_mutex_unlock(&buddy->table->write);
+		pthread_mutex_unlock(&buddy->table->read);
+		pthread_exit(NULL);
+	}
 	if (time > buddy->time_to_die)
 	{
-		buddy->is_alive = 0;
 		buddy->table->alive = 0;
-		alive = -1;
+		alive = 0;
 	}
 	pthread_mutex_unlock(&buddy->table->read);
-	if (alive == -1)
+	if (!alive)
 		print_died(buddy, time, from_mess);
 	return (alive);
 }

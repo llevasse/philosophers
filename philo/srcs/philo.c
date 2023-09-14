@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/13 16:07:22 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:28:00 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 	philo = malloc(sizeof(struct s_philo));
 	if (!philo)
 		return (write_mem_err(), NULL);
-	philo->is_alive = 1;
 	philo->id = buddy_id;
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
