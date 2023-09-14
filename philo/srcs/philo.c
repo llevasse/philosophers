@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 10:28:00 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:46:33 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	add_philo_thread(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
+		if (i % 2 == 0)
+			printf("0 %d \033[0;33mis sleeping\033[0m\n", i + 1);
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return (0);
