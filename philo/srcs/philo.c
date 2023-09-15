@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 22:52:47 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:28:51 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ void	create_threads(t_table *table)
 	int	i;
 
 	table->init_time = timestamp(table->curr_time) + (table->nb_philo * 12);
-	pthread_mutex_lock(&table->write);
 	add_philo_thread(table);
-	pthread_mutex_unlock(&table->write);
 	i = 0;
 	while (i < table->nb_philo)
 	{

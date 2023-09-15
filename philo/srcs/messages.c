@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/15 12:28:16 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:39:39 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,8 @@ void	print_messages(t_philo *buddy, long long time, char *mess)
 	time = timestamp(buddy->curr_time) - buddy->init_time;
 	if (time >= 999999)
 		time = 999999;
-	ft_putnbr_fd(time, buddy->fd);
-	ft_putchar_fd(' ', buddy->fd);
-	ft_putnbr_fd(buddy->id, buddy->fd);
-	ft_putchar_fd(' ', buddy->fd);
-	ft_putstr_fd(mess, buddy->fd);
-	ft_putchar_fd('\n', buddy->fd);
-	ft_putnbr_fd(time, buddy->table->fd);
-	ft_putchar_fd(' ', buddy->table->fd);
-	ft_putnbr_fd(buddy->id, buddy->table->fd);
-	ft_putchar_fd(' ', buddy->table->fd);
-	ft_putstr_fd(mess, buddy->table->fd);
-	ft_putchar_fd('\n', buddy->table->fd);
+	dprintf(buddy->fd, "%lld %d %s\n", time, buddy->id, mess);
+	dprintf(buddy->table->fd, "%lld %d %s\n", time, buddy->id, mess);
 	if (DEBUG)
 		printf("%lld %d %s\n", time, buddy->id, mess);
 	pthread_mutex_unlock(&buddy->table->write);
@@ -45,22 +35,8 @@ void	print_fork(t_philo *buddy, long long time, char *mess, int id)
 	time = timestamp(buddy->curr_time) - buddy->init_time;
 	if (time >= 999999)
 		time = 999999;
-	ft_putnbr_fd(time, buddy->fd);
-	ft_putchar_fd(' ', buddy->fd);
-	ft_putnbr_fd(buddy->id, buddy->fd);
-	ft_putchar_fd(' ', buddy->fd);
-	ft_putstr_fd(mess, buddy->fd);
-	ft_putstr_fd(" (", buddy->fd);
-	ft_putnbr_fd(id, buddy->fd);
-	ft_putstr_fd(")\n", buddy->fd);
-	ft_putnbr_fd(time, buddy->table->fd);
-	ft_putchar_fd(' ', buddy->table->fd);
-	ft_putnbr_fd(buddy->id, buddy->table->fd);
-	ft_putchar_fd(' ', buddy->table->fd);
-	ft_putstr_fd(mess, buddy->table->fd);
-	ft_putstr_fd(" (", buddy->table->fd);
-	ft_putnbr_fd(id, buddy->table->fd);
-	ft_putstr_fd(")\n", buddy->table->fd);
+	dprintf(buddy->fd, "%lld %d %s (%d)\n", time, buddy->id, mess, id);
+	dprintf(buddy->table->fd, "%lld %d %s (%d)\n", time, buddy->id, mess, id);
 	if (DEBUG)
 		printf("%lld %d %s (%d)\n", time, buddy->id, mess, id);
 	pthread_mutex_unlock(&buddy->table->write);
@@ -73,14 +49,8 @@ void	print_died(t_philo *buddy, long long time, int from_print)
 		pthread_mutex_lock(&buddy->table->write);
 	if (time >= 999999)
 		time = 999999;
-	ft_putnbr_fd(time, buddy->fd);
-	ft_putchar_fd(' ', buddy->fd);
-	ft_putnbr_fd(buddy->id, buddy->fd);
-	ft_putstr_fd(" \033[0;31mdied\033[0m\n", buddy->fd);
-	ft_putnbr_fd(time, buddy->table->fd);
-	ft_putchar_fd(' ', buddy->table->fd);
-	ft_putnbr_fd(buddy->id, buddy->table->fd);
-	ft_putstr_fd(" \033[0;31mdied\033[0m\n", buddy->table->fd);
+	dprintf(buddy->fd, "%lld %d \033[0;31mdied\033[0m\n", time, buddy->id);
+	dprintf(buddy->table->fd, "%lld %d \033[0;31mdied\033[0m\n", time, buddy->id);
 	if (DEBUG)
 		printf("%lld %d \033[0;31mdied\033[0m\n", time, buddy->id);
 	if (!from_print)

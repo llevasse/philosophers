@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/14 23:12:08 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:31:55 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	ft_eat(t_philo *buddy, long long time)
 		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
 		pthread_mutex_unlock(&buddy->fork);
-	//	print_fork(buddy, time, "has released a fork", buddy->right_buddy->id);
-	//	print_fork(buddy, time, "has released a fork", buddy->id);
+		print_fork(buddy, time, "has released a fork", buddy->right_buddy->id);
+		print_fork(buddy, time, "has released a fork", buddy->id);
 		if (buddy->eaten_times != -1)
 			buddy->eaten_times--;
 	}
@@ -68,15 +68,13 @@ void	*alive_routine(void	*args)
 	long long	time;
 
 	buddy = (t_philo *)args;
-	while (buddy->table->write.__data.__lock == 1)
-		usleep(10);
 	time = buddy->table->init_time;
-	while (time > timestamp(buddy->curr_time))
+	buddy->time_since_eat = time;
+	buddy->init_time = time;
+	while (timestamp(buddy->curr_time) < time)
 		usleep(10);
-	buddy->time_since_eat = timestamp(buddy->curr_time);
-	buddy->init_time = timestamp(buddy->curr_time);
 	if (buddy->id % 2 == 0)
-		wait_time(buddy, buddy->init_time + buddy->time_to_sleep, time);
+		ft_sleep(buddy, time);
 	while (1)
 	{
 		
