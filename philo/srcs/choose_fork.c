@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 21:34:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/15 12:41:12 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:40:26 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	choose_higher(t_philo *buddy, long long time)
 
 int	choose_fork(t_philo *buddy, long long time)
 {
-	//if (buddy->id < buddy->right_buddy->id)
+	if (buddy->id < buddy->right_buddy->id)
 		return (choose_higher(buddy, time));
 	while (buddy->fork.__data.__lock == 1)
 	{
