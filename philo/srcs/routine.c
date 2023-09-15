@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/15 21:49:09 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/15 22:00:52 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	*alive_routine(void	*args)
 	long long	time;
 
 	buddy = (t_philo *)args;
-	time = buddy->table->init_time + (buddy->id / 10);
+	time = buddy->table->init_time /*+ (buddy->id / 10)*/;
 	buddy->time_since_eat = time;
 	buddy->init_time = time;
 	while (timestamp(buddy->curr_time) < time)
