@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 00:48:42 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:55:05 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	check_died(t_table *table)
 		if (timestamp() - table->philo[i]->time_since_eat > table->philo[i]->time_to_die)
 		{
 			print_died(table->philo[i]);
+			table->alive = 0;
 			return (0);
 		}
 		i++;
@@ -43,6 +44,8 @@ void	*death_routine(void	*args)
 	t_table	*table;
 
 	table = (t_table *)args;
+	while (timestamp() < table->init_time)
+		continue ;
 	while (1)
 	{
 		pthread_mutex_lock(&table->read);
