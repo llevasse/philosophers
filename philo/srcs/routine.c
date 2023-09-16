@@ -6,34 +6,22 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 18:35:06 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:50:40 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	check_death(t_philo *buddy, int from_mess)
+int	check_death(t_philo *buddy)
 {
-	int			alive;
-	long long	time;
-
-	time = timestamp() - buddy->time_since_eat;
-	alive = 1;
 	pthread_mutex_lock(&buddy->table->read);
 	if (buddy->table->alive == 0)
 	{
 		pthread_mutex_unlock(&buddy->table->read);
 		return (0);
 	}
-	if (time > buddy->time_to_die)
-	{
-		buddy->table->alive = 0;
-		alive = 0;
-	}
 	pthread_mutex_unlock(&buddy->table->read);
-	if (!alive)
-		print_died(buddy, from_mess);
-	return (alive);
+	return (1);
 }
 
 int	ft_eat(t_philo *buddy)
@@ -52,7 +40,7 @@ int	ft_eat(t_philo *buddy)
 	}
 	else
 		return (0);
-	return (check_death(buddy, 0));
+	return (check_death(buddy));
 }
 
 int	ft_sleep(t_philo *buddy)
@@ -62,7 +50,7 @@ int	ft_sleep(t_philo *buddy)
 	time = timestamp() + buddy->time_to_sleep;
 	print_messages(buddy, "\033[0;33mis sleeping\033[0m");
 	wait_time(buddy, time);
-	return (check_death(buddy, 0));
+	return (check_death(buddy));
 }
 
 void	*alive_routine(void	*args)
@@ -85,8 +73,6 @@ void	*alive_routine(void	*args)
 		if (buddy->eaten_times == 0)
 			break ;
 		if (!ft_sleep(buddy))
-			break ;
-		if (!check_death(buddy, 0))
 			break ;
 		print_messages(buddy, "is thinking");
 	}

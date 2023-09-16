@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 11:02:56 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 17:27:45 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:50:01 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ long long	timestamp(void)
 
 void	wait_time(t_philo *buddy, long wait_time)
 {
-	while (timestamp() < wait_time && check_death(buddy, 0))
+	while (timestamp() < wait_time && check_death(buddy))
 		usleep(10);
 }

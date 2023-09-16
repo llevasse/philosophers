@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 18:37:52 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:48:58 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void				wait_time(t_philo *buddy, long wait_time);
 
 void				*death_routine(void	*args);
 void				*alive_routine(void	*args);
-int					check_death(t_philo *buddy, int from_mess);
+int					check_death(t_philo *buddy);
 int					choose_fork(t_philo *buddy);
 
 int					ft_isspace(char c);

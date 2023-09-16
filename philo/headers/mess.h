@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 17:33:26 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:49:39 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void				write_mem_err(void);
 void				write_mut_err(void);
 char				*ft_itoa(int n);
 
-void				print_died(t_philo *buddy, int from_print);
+void				print_died(t_philo *buddy);
 void				print_messages(t_philo *buddy, char *mess);
 void				print_fork(t_philo *buddy, char *mess, int id);
 
