@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/15 21:51:43 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 00:48:32 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ int	add_philo_thread(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-	/*	if (table->philo[i]->id % 2 == 0)
-		{
-			ft_putstr_fd("0 ", table->philo[i]->fd);
-			ft_putnbr_fd(table->philo[i]->id, table->philo[i]->fd);
-			ft_putstr_fd(" \033[0;33mis waiting\033[0m\n", table->philo[i]->fd);
-		}*/
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return (0);
