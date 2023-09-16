@@ -6,17 +6,18 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 16:21:14 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 17:36:49 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	check_death(t_philo *buddy, long long time, int from_mess)
+int	check_death(t_philo *buddy, int from_mess)
 {
-	int	alive;
+	int			alive;
+	long long	time;
 
-	time = timestamp(buddy->curr_time) - buddy->time_since_eat;
+	time = timestamp() - buddy->time_since_eat;
 	alive = 1;
 	pthread_mutex_lock(&buddy->table->read);
 	if (buddy->table->alive == 0)
@@ -31,35 +32,37 @@ int	check_death(t_philo *buddy, long long time, int from_mess)
 	}
 	pthread_mutex_unlock(&buddy->table->read);
 	if (!alive)
-		print_died(buddy, time, from_mess);
+		print_died(buddy, from_mess);
 	return (alive);
 }
 
-int	ft_eat(t_philo *buddy, long long time)
+int	ft_eat(t_philo *buddy)
 {
-	if (choose_fork(buddy, time))
+	if (choose_fork(buddy))
 	{
-		buddy->time_since_eat = timestamp(buddy->curr_time);
-		print_messages(buddy, time, "\033[0;32mis eating\033[0m");
-		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat, time);
+		buddy->time_since_eat = timestamp();
+		print_messages(buddy, "\033[0;32mis eating\033[0m");
+		wait_time(buddy, buddy->time_since_eat + buddy->time_to_eat);
 		pthread_mutex_unlock(&buddy->right_buddy->fork);
 		pthread_mutex_unlock(&buddy->fork);
-		print_fork(buddy, time, "has released a fork", buddy->right_buddy->id);
-		print_fork(buddy, time, "has released a fork", buddy->id);
+		print_fork(buddy, "has released a fork", buddy->right_buddy->id);
+		print_fork(buddy, "has released a fork", buddy->id);
 		if (buddy->eaten_times != -1)
 			buddy->eaten_times--;
 	}
 	else
 		return (0);
-	return (check_death(buddy, time, 0));
+	return (check_death(buddy, 0));
 }
 
-int	ft_sleep(t_philo *buddy, long long time)
+int	ft_sleep(t_philo *buddy)
 {
-	print_messages(buddy, time, "\033[0;33mis sleeping\033[0m");
-	time = timestamp(buddy->curr_time) + buddy->time_to_sleep;
-	wait_time(buddy, time, time);
-	return (check_death(buddy, time, 0));
+	long long	time;
+
+	print_messages(buddy, "\033[0;33mis sleeping\033[0m");
+	time = timestamp() + buddy->time_to_sleep;
+	wait_time(buddy, time);
+	return (check_death(buddy, 0));
 }
 
 void	*alive_routine(void	*args)
@@ -71,21 +74,23 @@ void	*alive_routine(void	*args)
 	time = buddy->table->init_time;
 	buddy->time_since_eat = time;
 	buddy->init_time = time;
-	while (timestamp(buddy->curr_time) < time)
-		usleep(10);
+	while (timestamp() < time)
+		continue ;
+//		usleep(10);
+	printf("init%d : %lld\n", buddy->id, timestamp());
 	if (buddy->id % 2 == 0)
-		ft_sleep(buddy, time);
+		ft_sleep(buddy);
 	while (1)
 	{
-		if (!ft_eat(buddy, time))
+		if (!ft_eat(buddy))
 			break ;
 		if (buddy->eaten_times == 0)
 			break ;
-		if (!ft_sleep(buddy, time))
+		if (!ft_sleep(buddy))
 			break ;
-		if (!check_death(buddy, time, 0))
+		if (!check_death(buddy, 0))
 			break ;
-		print_messages(buddy, time, "is thinking");
+		print_messages(buddy, "is thinking");
 	}
 	pthread_exit(NULL);
 }

@@ -6,18 +6,20 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/15 22:35:21 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 17:35:30 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_messages(t_philo *buddy, long long time, char *mess)
+void	print_messages(t_philo *buddy, char *mess)
 {
+	long long	time;
+
 	pthread_mutex_lock(&buddy->table->write);
-	if (!check_death(buddy, time, 1))
+	if (!check_death(buddy, 1))
 		return ((void)pthread_mutex_unlock(&buddy->table->write));
-	time = timestamp(buddy->curr_time) - buddy->init_time;
+	time = timestamp() - buddy->init_time;
 	if (time >= 999999)
 		time = 999999;
 	dprintf(buddy->fd, "%lld %d %s\n", time, buddy->id, mess);
@@ -27,12 +29,14 @@ void	print_messages(t_philo *buddy, long long time, char *mess)
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
-void	print_fork(t_philo *buddy, long long time, char *mess, int id)
+void	print_fork(t_philo *buddy, char *mess, int id)
 {
+	long long	time;
+
 	pthread_mutex_lock(&buddy->table->write);
-	if (!check_death(buddy, time, 1))
+	if (!check_death(buddy, 1))
 		return ((void)pthread_mutex_unlock(&buddy->table->write));
-	time = timestamp(buddy->curr_time) - buddy->init_time;
+	time = timestamp() - buddy->init_time;
 	if (time >= 999999)
 		time = 999999;
 	dprintf(buddy->fd, "%lld %d %s (%d)\n", time, buddy->id, mess, id);
@@ -42,9 +46,11 @@ void	print_fork(t_philo *buddy, long long time, char *mess, int id)
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
-void	print_died(t_philo *buddy, long long time, int from_print)
+void	print_died(t_philo *buddy, int from_print)
 {
-	time = timestamp(buddy->curr_time) - buddy->init_time;
+	long long	time;
+
+	time = timestamp() - buddy->init_time;
 	if (!from_print)
 		pthread_mutex_lock(&buddy->table->write);
 	if (time >= 999999)
