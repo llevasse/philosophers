@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 18:29:05 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:35:06 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	*alive_routine(void	*args)
 		continue ;
 	buddy->time_since_eat = time;
 	buddy->init_time = time;
-//	dprintf(buddy->table->fd, "init%d : %lld\n", buddy->id, timestamp());
 	if (buddy->id % 2 == 0)
 		ft_sleep(buddy);
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:54:38 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 17:33:05 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:37:52 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@
 
 # include "struct.h"
 # include "mess.h"
-
-# ifndef DEBUG
-# define DEBUG 0
-# endif
 
 int					is_args_valid(int argc, char **argv);
 int					is_only_digit(char	*s);

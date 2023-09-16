@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/15 12:28:35 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:38:24 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_table	*init_table(char **argv)
 		return (write_mem_err(), free_table(table), NULL);
 	while (i < table->nb_philo)
 		set_neighboor(table, i++);
-	table->fd = open("log", O_RDWR | O_TRUNC | O_CREAT, 0666);
 	return (table);
 }
 
