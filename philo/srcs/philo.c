@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 00:55:37 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 01:06:58 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	add_philo_thread(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
+		table->philo[i]->time_since_eat = table->init_time;
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return (0);
@@ -32,8 +33,8 @@ void	create_threads(t_table *table)
 	int	i;
 
 	table->init_time = timestamp() + (table->nb_philo * 20);
-	pthread_create(&table->death, NULL, &death_routine, table);
 	add_philo_thread(table);
+	pthread_create(&table->death, NULL, &death_routine, table);
 	i = 0;
 	while (i < table->nb_philo)
 	{
@@ -86,6 +87,8 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->eaten_times = -1;
 	if (pthread_mutex_init(&philo->fork, NULL))
+		return (write_mut_err(), free(philo), NULL);
+	if (pthread_mutex_init(&philo->eat, NULL))
 		return (write_mut_err(), free(philo), NULL);
 	philo->table = table;
 	return (philo);
