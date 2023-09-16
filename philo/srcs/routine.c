@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 01:06:49 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 01:08:26 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	*alive_routine(void	*args)
 	buddy->init_time = time;
 	if (buddy->id % 2 == 0)
 		ft_sleep(buddy);
-	while (1)
+	while (check_death(buddy))
 	{
 		if (!ft_eat(buddy))
 			break ;

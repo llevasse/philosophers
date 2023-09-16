@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 01:04:21 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 01:08:09 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	check_died(t_table *table)
 		{
 			print_died(table->philo[i]);
 			table->alive = 0;
+			pthread_mutex_unlock(&table->philo[i]->eat);
 			return (0);
 		}
 		pthread_mutex_unlock(&table->philo[i]->eat);
