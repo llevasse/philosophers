@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/16 17:36:49 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:29:05 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int	ft_sleep(t_philo *buddy)
 {
 	long long	time;
 
-	print_messages(buddy, "\033[0;33mis sleeping\033[0m");
 	time = timestamp() + buddy->time_to_sleep;
+	print_messages(buddy, "\033[0;33mis sleeping\033[0m");
 	wait_time(buddy, time);
 	return (check_death(buddy, 0));
 }
@@ -72,12 +72,11 @@ void	*alive_routine(void	*args)
 
 	buddy = (t_philo *)args;
 	time = buddy->table->init_time;
-	buddy->time_since_eat = time;
-	buddy->init_time = time;
 	while (timestamp() < time)
 		continue ;
-//		usleep(10);
-	printf("init%d : %lld\n", buddy->id, timestamp());
+	buddy->time_since_eat = time;
+	buddy->init_time = time;
+//	dprintf(buddy->table->fd, "init%d : %lld\n", buddy->id, timestamp());
 	if (buddy->id % 2 == 0)
 		ft_sleep(buddy);
 	while (1)
