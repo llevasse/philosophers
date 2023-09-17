@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 19:31:03 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 19:31:52 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	check_need_eat(t_table *table)
 	while (i < table->nb_philo)
 	{
 		pthread_mutex_lock(&table->philo[i]->eat);
-		if (table->philo[i]->eaten_times > 0 || table->philo[i]->eaten_times == -1)
+		if (table->philo[i]->eaten_times > 0 || \
+				table->philo[i]->eaten_times == -1)
 		{
 			pthread_mutex_unlock(&table->philo[i]->eat);
 			return (1);
