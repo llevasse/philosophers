@@ -1,6 +1,6 @@
 NAME			=	philo
 CC				=	cc
-FLAGS			=	-Wall -Werror -Wextra -g3 #-fsanitize=thread 
+FLAGS			=	-Wall -Werror -Wextra -g #-fsanitize=thread 
 RM				=	rm -rf
 RED				=	\033[0;31m
 GREEN			=	\033[0;32m
