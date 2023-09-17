@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 15:28:06 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 19:08:45 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,10 @@ int	ft_sleep(t_philo *buddy)
 void	*alive_routine(void	*args)
 {
 	t_philo		*buddy;
-	long long	time;
 
 	buddy = (t_philo *)args;
-	time = buddy->table->init_time;
-	while (timestamp() < time)
+	while (timestamp() < buddy->init_time)
 		usleep(10) ;
-	buddy->init_time = time;
 	if (buddy->id % 2 == 0)
 		ft_sleep(buddy);
 	while (check_death(buddy))

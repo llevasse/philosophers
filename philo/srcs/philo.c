@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 01:06:58 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/17 19:08:15 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	add_philo_thread(t_table *table)
 	while (i < table->nb_philo)
 	{
 		table->philo[i]->time_since_eat = table->init_time;
+		table->philo[i]->init_time = table->init_time;
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
 			return (0);
@@ -32,7 +33,7 @@ void	create_threads(t_table *table)
 {
 	int	i;
 
-	table->init_time = timestamp() + (table->nb_philo * 20);
+	table->init_time = timestamp() + table->nb_philo;
 	add_philo_thread(table);
 	pthread_create(&table->death, NULL, &death_routine, table);
 	i = 0;
