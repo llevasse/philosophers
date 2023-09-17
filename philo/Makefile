@@ -1,6 +1,6 @@
 NAME			=	philo
 CC				=	cc
-FLAGS			=	-Wall -Werror -Wextra #-fsanitize=thread
+FLAGS			=	-Wall -Werror -Wextra -g3 #-fsanitize=thread 
 RM				=	rm -rf
 RED				=	\033[0;31m
 GREEN			=	\033[0;32m
@@ -32,11 +32,11 @@ HEADER_FILE		=	headers/philosophers.h \
 					headers/struct.h
 
 $(NAME):			$(OBJS_DIR) Makefile $(HEADER_FILE) $(OBJS)
-					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) $(OBJS) -lpthread -lrt -o $@
+					@$(CC) $(FLAGS) -I $(HEADER_DIR) $(OBJS) -lpthread -lrt -o $@
 					@echo "\33[2K\r$(GREEN)Philosophers compiled :D$(NC)"
 					
 $(OBJS_DIR)%.o:	%.c $(HEADER_FILE) Makefile
-					@$(CC) $(FLAGS) -g -I $(HEADER_DIR) -c $< -o $@
+					@$(CC) $(FLAGS) -I $(HEADER_DIR) -c $< -o $@
 					@echo -n "\33[2K\r$(YELLOW)Compiled $<"
 
 $(OBJS_DIR):
