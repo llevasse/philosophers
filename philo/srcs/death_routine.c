@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 10:58:55 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:17:27 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	set_dead(t_table *table)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&table->write);
 	while (i < table->nb_philo)
 	{
 		pthread_mutex_lock(&table->philo[i]->save);
@@ -53,6 +54,7 @@ static void	set_dead(t_table *table)
 		pthread_mutex_unlock(&table->philo[i]->save);
 		i++;
 	}
+	pthread_mutex_unlock(&table->write);
 }
 
 static int	check_died(t_table *table)
@@ -70,8 +72,8 @@ static int	check_died(t_table *table)
 			table->philo[i]->alive = 0;
 			pthread_mutex_unlock(&table->philo[i]->save);
 			pthread_mutex_unlock(&table->read);
-			print_died(table->philo[i]);
 			set_dead(table);
+			print_died(table->philo[i]);
 			return (0);
 		}
 		pthread_mutex_unlock(&table->philo[i]->save);
