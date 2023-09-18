@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 13:59:22 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:00:04 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	init_commun_mutex(t_table *table)
 	if (pthread_mutex_init(&table->write, NULL))
 		return (write_mut_err(), free_table(table), 0);
 	if (pthread_mutex_init(&table->read, NULL))
-		return (write_mut_err(), free_table(table), 
-				pthread_mutex_destroy(&table->write), 0);
+		return (write_mut_err(), free_table(table),
+			pthread_mutex_destroy(&table->write), 0);
 	return (1);
 }
 

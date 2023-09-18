@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:58:11 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 13:53:00 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:00:41 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 			table->philo[i++]->eaten_times = ft_atoi(argv[5]);
 	}
 	create_threads(table);
-	free_table(table);
 	pthread_mutex_destroy(&table->write);
 	pthread_mutex_destroy(&table->read);
+	free_table(table);
 	return (0);
 }
