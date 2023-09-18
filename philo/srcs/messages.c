@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 10:51:24 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:05:41 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ void	print_messages(t_philo *buddy, char *mess)
 	if (!check_death(buddy))
 		return ((void)pthread_mutex_unlock(&buddy->table->write));
 	printf("%lld %d %s\n", time, buddy->id, mess);
-	pthread_mutex_unlock(&buddy->table->write);
-}
-
-void	print_fork(t_philo *buddy, char *mess, int id)
-{
-	long long	time;
-
-	pthread_mutex_lock(&buddy->table->write);
-	time = timestamp() - buddy->init_time;
-	if (time >= 999999)
-		time = 999999;
-	if (!check_death(buddy))
-		return ((void)pthread_mutex_unlock(&buddy->table->write));
-	printf("%lld %d %s (%d)\n", time, buddy->id, mess, id);
 	pthread_mutex_unlock(&buddy->table->write);
 }
 
