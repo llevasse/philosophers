@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 01:02:53 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 08:54:47 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ typedef struct s_philo {
 	struct timeval	curr_time;
 	long long		init_time;
 	int				id;
+	int				alive;
 	int				time_to_die;
 	int				time_to_eat;
 	long long		time_since_eat;
 	int				time_to_sleep;
 	int				eaten_times;
 	pthread_mutex_t	fork;
-	pthread_mutex_t	eat;
+	pthread_mutex_t	save;
 	struct s_philo	*left_buddy;
 	struct s_philo	*right_buddy;
 	struct s_table	*table;

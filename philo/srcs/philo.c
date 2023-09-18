@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/17 19:08:15 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 08:57:41 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,14 @@ t_philo	*set_philo(char **argv, t_table *table, int buddy_id)
 	if (!philo)
 		return (write_mem_err(), NULL);
 	philo->id = buddy_id + 1;
+	philo->alive = 1;
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->eaten_times = -1;
 	if (pthread_mutex_init(&philo->fork, NULL))
 		return (write_mut_err(), free(philo), NULL);
-	if (pthread_mutex_init(&philo->eat, NULL))
+	if (pthread_mutex_init(&philo->save, NULL))
 		return (write_mut_err(), free(philo), NULL);
 	philo->table = table;
 	return (philo);
