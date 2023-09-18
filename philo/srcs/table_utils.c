@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 14:00:04 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:20:44 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int	init_commun_mutex(t_table *table)
 {
 	if (pthread_mutex_init(&table->write, NULL))
 		return (write_mut_err(), free_table(table), 0);
-	if (pthread_mutex_init(&table->read, NULL))
-		return (write_mut_err(), free_table(table),
-			pthread_mutex_destroy(&table->write), 0);
 	return (1);
 }
 
@@ -43,7 +40,6 @@ t_table	*init_table(char **argv)
 	if (!table->threads)
 	{
 		pthread_mutex_destroy(&table->write);
-		pthread_mutex_destroy(&table->read);
 		return (write_mem_err(), free_table(table), NULL);
 	}
 	while (i < table->nb_philo)

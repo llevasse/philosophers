@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 21:17:27 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:19:58 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	check_died(t_table *table)
 		{
 			table->philo[i]->alive = 0;
 			pthread_mutex_unlock(&table->philo[i]->save);
-			pthread_mutex_unlock(&table->read);
 			set_dead(table);
 			print_died(table->philo[i]);
 			return (0);
@@ -91,10 +90,8 @@ void	*death_routine(void	*args)
 		continue ;
 	while (1)
 	{
-		pthread_mutex_lock(&table->read);
 		if (!check_died(table))
 			break ;
-		pthread_mutex_unlock(&table->read);
 		if (!check_need_eat(table))
 			break ;
 		usleep(100);

@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:45:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 08:54:47 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:21:08 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_table {
 	pthread_t		death;
 	pthread_t		*threads;
 	pthread_mutex_t	write;
-	pthread_mutex_t	read;
 	t_philo			**philo;
 }	t_table;
 

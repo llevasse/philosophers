@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 09:58:11 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 14:00:41 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:20:59 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char **argv)
 	}
 	create_threads(table);
 	pthread_mutex_destroy(&table->write);
-	pthread_mutex_destroy(&table->read);
 	free_table(table);
 	return (0);
 }
