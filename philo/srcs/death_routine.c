@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:25:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 10:39:57 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 10:58:55 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ static int	check_died(t_table *table)
 				table->philo[i]->time_to_die && \
 				table->philo[i]->eaten_times != 0)
 		{
-			pthread_mutex_unlock(&table->philo[i]->save);
-			table->alive = 0;
 			table->philo[i]->alive = 0;
+			pthread_mutex_unlock(&table->philo[i]->save);
 			pthread_mutex_unlock(&table->read);
 			print_died(table->philo[i]);
 			set_dead(table);
