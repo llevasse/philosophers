@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:51:17 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 09:03:47 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:30:06 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@
 # define MEM_ERR_L 28 
 # define MUT_ERR "Mutex initialization error\n"
 # define MUT_ERR_L 27 
+# define THR_ERR "Thread initialization error\n"
+# define THR_ERR_L 28 
+# define TJOIN_ERR "Thread join error\n"
+# define TJOIN_ERR_L 18 
 
 void				write_mem_err(void);
 void				write_mut_err(void);
+void				write_thread_err(void);
+void				write_join_err(void);
 char				*ft_itoa(int n);
 
 void				print_died(t_philo *buddy);

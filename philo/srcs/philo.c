@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 10:40:45 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:26:06 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	add_philo_thread(t_table *table)
 		table->philo[i]->init_time = table->init_time;
 		if (pthread_create(
 				&table->threads[i], NULL, &alive_routine, table->philo[i]))
-			return (0);
+			return (write_thread_err(), 0);
 		i++;
 	}
 	return (1);
@@ -34,17 +34,19 @@ void	create_threads(t_table *table)
 	int	i;
 
 	table->init_time = timestamp() + table->nb_philo;
-	add_philo_thread(table);
-	pthread_create(&table->death, NULL, &death_routine, table);
+	if (!add_philo_thread(table))
+		return ;
+	if (pthread_create(&table->death, NULL, &death_routine, table))
+		return (write_thread_err());
 	i = 0;
 	while (i < table->nb_philo)
 	{
 		if (pthread_join(table->threads[i], NULL))
-			return ;
+			return (write_join_err());
 		i++;
 	}
 	if (pthread_join(table->death, NULL))
-		return ;
+		return (write_join_err());
 }
 
 t_philo	**init_philo(int max_id, char **argv, t_table *table)
