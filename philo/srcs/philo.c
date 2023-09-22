@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:27:55 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 13:26:06 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/22 23:06:49 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ void	set_neighboor(t_table *table, int buddy_id)
 		left_id = table->nb_philo - 1;
 	if (buddy_id == table->nb_philo - 1)
 		right_id = 0;
+	if (right_id == 0 && left_id == 0)
+	{
+		table->philo[buddy_id]->left_buddy = 0;
+		table->philo[buddy_id]->right_buddy = 0;
+		return ;
+	}
 	table->philo[buddy_id]->left_buddy = table->philo[left_id];
 	table->philo[buddy_id]->right_buddy = table->philo[right_id];
 }

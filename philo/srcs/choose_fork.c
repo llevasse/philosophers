@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 21:34:10 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 14:05:34 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/22 23:05:10 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static int	choose_higher(t_philo *buddy)
 
 int	choose_fork(t_philo *buddy)
 {
+	if (!buddy->right_buddy)
+		return ((void)print_messages(buddy, "has taken a fork"), 0);
 	if (buddy->id < buddy->right_buddy->id)
 		return (choose_higher(buddy));
 	pthread_mutex_lock(&buddy->fork);
