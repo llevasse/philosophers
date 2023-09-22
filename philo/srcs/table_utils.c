@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:35:33 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 21:20:44 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:57:56 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_table	*init_table(char **argv)
 	if (!table->philo)
 		return (free_table(table), NULL);
 	table->philo[table->nb_philo] = 0;
+	printf("time to eat : %d\n", table->philo[0]->time_to_eat);
 	table->threads = malloc(sizeof(pthread_t) * (table->nb_philo + 1));
 	if (!table->threads)
 	{

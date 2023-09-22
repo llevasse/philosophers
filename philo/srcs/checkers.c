@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:49:40 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/08 22:17:24 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:59:42 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_args_valid(int argc, char **argv)
 	return (1);
 }
 
-int	is_only_digit(char	*s)
+int	is_only_digit(char *s)
 {
 	int	i;
 
@@ -42,6 +42,8 @@ int	is_only_digit(char	*s)
 		return (0);
 	while (s[i] && s[i] >= '0' && s[i] <= '9')
 		i++;
+	if (ft_atoi(s) < 0)
+		return (0);
 	if (!s[i])
 		return (1);
 	return (0);
