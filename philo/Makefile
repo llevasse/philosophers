@@ -18,11 +18,8 @@ SRC				=	srcs/main.c \
 					srcs/death_routine.c \
 					srcs/ft_strlen.c \
 					srcs/messages.c \
-					srcs/ft_putstr_fd.c \
-					srcs/ft_putchar_fd.c \
-					srcs/ft_putnbr_fd.c \
+					srcs/print.c \
 					srcs/ft_atoi.c \
-					srcs/ft_itoa.c
 
 OBJS_DIR		=	.OBJS/
 OBJS			=	$(addprefix $(OBJS_DIR), $(SRC:.c=.o))
