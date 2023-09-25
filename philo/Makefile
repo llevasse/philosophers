@@ -18,7 +18,6 @@ SRC				=	srcs/main.c \
 					srcs/death_routine.c \
 					srcs/ft_strlen.c \
 					srcs/messages.c \
-					srcs/print.c \
 					srcs/ft_atoi.c \
 
 OBJS_DIR		=	.OBJS/

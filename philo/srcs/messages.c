@@ -6,7 +6,7 @@
 /*   By: llevasse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 22:35:37 by llevasse          #+#    #+#             */
-/*   Updated: 2023/09/18 14:05:41 by llevasse         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:04:20 by llevasse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,40 @@ void	print_died(t_philo *buddy)
 	printf("%lld %d \033[0;31mdied\033[0m\n", time, buddy->id);
 	usleep(150);
 	pthread_mutex_unlock(&buddy->table->write);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	if (n == -2147483648)
+	{
+		ft_putstr_fd("-2147483648", fd);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(n * -1, fd);
+	}
+	else
+	{
+		if (n < 10)
+			ft_putchar_fd(n + '0', fd);
+		else
+		{
+			ft_putnbr_fd(n / 10, fd);
+			ft_putchar_fd(n % 10 + '0', fd);
+		}
+	}
+}
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
 }
